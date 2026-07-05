@@ -97,5 +97,3 @@ Push this repo to GitHub and enable GitHub Pages from the root of the `main` bra
 ## Credits
 
 Data and analysis: real MODIS Terra NDVI processed in Google Earth Engine, joined to World Bank income classifications.
-Site: vanilla HTML/CSS/JS with [globe.gl](https://globe.gl) for the interactive globe.
-Format inspiration for the globe/scrollytelling structure: "The Greening Earth" by Y. Lin, J. Kavanal, K. Lee & R. Dulgerian (DSC 106), used with permission — all data, analysis, findings, and code in this project are original.
