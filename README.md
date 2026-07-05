@@ -1,6 +1,6 @@
-# The Greening Divide — Global Greening Inequality Explorer (DSC 106)
+# The Greening Divide — Global Greening Inequality Explorer 
 
-This project was rebuilt around the real data. The original hypothesis — that global greening favors wealthy countries — does not survive the numbers.
+This was a DSC 80 project was built around the real data. The original hypothesis — that global greening favors wealthy countries — does not survive the numbers.
 The site now uses 166 countries with clean 2000–2024 MODIS NDVI coverage, joined to World Bank income groups, and the story is honest: income explains almost nothing about who greened.
 
 ## Key findings
