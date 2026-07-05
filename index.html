@@ -794,31 +794,31 @@ const REGION_COPY={
   global:{
     title:'Testing the Wealth Hypothesis',
     body:'166 countries have complete, stable MODIS NDVI coverage from 2000 to 2024. 83% of them are greener today than their own 2000–2005 baseline — greening is close to universal. The question is whether that greening tracks income. Group the countries by World Bank tier and the four lines land within 1.6 points of each other: income explains almost none of the variation. Jump to a country below to see how far individual nations swing from their own income group\'s average.',
-    point:{lat:6,lng:12,altitude:1.95},
+    point:{lat:6,lng:12,altitude:2.5},
     summary:{isGlobal:true,name:'All 166 Countries'}
   },
   pakistan:{
     title:'Pakistan — Lower-Middle Income',
     body:'Pakistan is the second-fastest-greening country on Earth in this dataset: NDVI up 30.6% versus its 2000–2005 baseline, driven by irrigation expansion across the Indus basin, not by national wealth. Its own income tier (lower-middle) averages only +4.8% by 2024 — Pakistan is greening roughly 6× faster than its income peers.',
-    point:{lat:30,lng:70,altitude:1.4},
+    point:{lat:30,lng:70,altitude:1.85},
     summary:{iso3:'PAK',name:'Pakistan',group:'Lower middle income',ndvi:[0.1718,0.1954,0.2335],change:30.6,rank:2,direction:'greening'}
   },
   eritrea:{
     title:'Eritrea — Low Income',
     body:'Eritrea tops the list: +34.0% NDVI versus baseline, the single fastest-greening country of the 166 analyzed — and it is classified low income, the poorest World Bank tier. Its own group (low income) averages +6.4% by 2024. Wealth did not produce this greening; dryland and agricultural land-use change did.',
-    point:{lat:15,lng:39,altitude:1.5},
+    point:{lat:15,lng:39,altitude:1.95},
     summary:{iso3:'ERI',name:'Eritrea',group:'Low income',ndvi:[0.1636,0.1542,0.2183],change:34.0,rank:1,direction:'greening'}
   },
   turkmenistan:{
     title:'Turkmenistan — Upper-Middle Income',
     body:'Turkmenistan is the single fastest-browning country in the dataset: NDVI down 11.9% versus its 2000–2005 baseline. It sits in the upper-middle income tier, whose group average is actually positive (+5.3%). Arid-land degradation overwhelms whatever wealth advantage this tier has on average.',
-    point:{lat:39,lng:59,altitude:1.5},
+    point:{lat:39,lng:59,altitude:1.95},
     summary:{iso3:'TKM',name:'Turkmenistan',group:'Upper middle income',ndvi:[0.1209,0.1302,0.1193],change:-11.9,rank:1,direction:'browning'}
   },
   iceland:{
     title:'Iceland — High Income',
     body:'Iceland — the wealthiest tier in this dataset — is the second-fastest-browning country on Earth: NDVI down 11.7% versus baseline. Its own high-income group averages +5.7% by 2024. If greening favored the rich, Iceland should be near the top, not the bottom.',
-    point:{lat:65,lng:-19,altitude:1.3},
+    point:{lat:65,lng:-19,altitude:1.7},
     summary:{iso3:'ISL',name:'Iceland',group:'High income',ndvi:[0.1574,0.1503,0.1459],change:-11.7,rank:2,direction:'browning'}
   }
 };
@@ -908,9 +908,9 @@ function polygonAltitude(){return .01;}
 const INCOME_RANK={'Low income':1,'Lower middle income':2,'Upper middle income':3,'High income':4};
 function wealthAltitude(group){
   const r=INCOME_RANK[group]||1;
-  return .02+(r-1)/3*.34;
+  return .035+(r-1)/3*.22;
 }
-function changeRadius(v){return .35+Math.min(2.3,Math.abs(v)/9)}
+function changeRadius(v){return .16+Math.min(.5,Math.abs(v)/45)}
 function countryChangePoints(){
   return [...state.data.values()].filter(d=>d.lat!=null&&Math.abs(d.change)>=.8);
 }
@@ -1064,7 +1064,7 @@ function initGlobe(){
     .pointColor(unifiedPointColor)
     .pointRadius(unifiedPointRadius)
     .pointAltitude(unifiedPointAltitude)
-    .pointResolution(4)
+    .pointResolution(6)
     .pointsTransitionDuration(0)
     .pointLabel(unifiedPointLabel)
     .labelsData(OCEAN_LABELS)

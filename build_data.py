@@ -1,8 +1,8 @@
-"""Full data pipeline for The Greening Mirage.
+"""Full data pipeline for The Greening Divide.
 
 Takes the raw Google Earth Engine export (country x year x NDVI), joins World Bank
 income groups, cleans, computes the group trajectories + summary statistics, and
-injects everything into index.html between the /*NDVI_DATA_START*/.../*END*/ markers.
+writes greening_with_income.csv -- the dataset index.html fetches at runtime.
 
 Usage:  pip install pandas country_converter
         python build_data.py greening_ndvi_by_country.csv
@@ -12,13 +12,12 @@ Raw CSV columns (from the GEE script): a country code column, `country` (name),
 GEE's LSIB boundaries use FIPS 10-4 codes, not ISO3 — we re-derive ISO3 from the
 country NAME, which is unambiguous.
 """
-import sys, json, re, logging
+import sys, logging
 import pandas as pd, numpy as np
 logging.disable(logging.WARNING)
 import country_converter as coco
 
 CSV = sys.argv[1] if len(sys.argv) > 1 else 'greening_ndvi_by_country.csv'
-INDEX = 'index.html'
 BASE_YEARS = list(range(2000, 2006))
 
 # World Bank income classification (FY2024-25). Spot-check against the current
@@ -32,10 +31,17 @@ LAB = {'L':'Low income','LM':'Lower middle income','UM':'Upper middle income','H
 ORDER = ['Low income','Lower middle income','Upper middle income','High income']
 RANK = {'Low income':1,'Lower middle income':2,'Upper middle income':3,'High income':4}
 
+# Non-sovereign places with no World Bank income tier that country_converter's fuzzy
+# matching has been observed to mis-map onto a real country's ISO3 (confirmed case:
+# "S Georgia & S Sandwich Is", an uninhabited UK territory, was resolving to Georgia's
+# GEO code and silently corrupting/blending with the real country's NDVI trend).
+NON_COUNTRY_NAMES = {'S Georgia & S Sandwich Is'}
+
 cc = coco.CountryConverter()
 df = pd.read_csv(CSV)
 df['year'] = df['year'].astype(int)
 df = df[~df['country'].astype(str).str.contains(r'\(')]                 # drop sub-territories
+df = df[~df['country'].isin(NON_COUNTRY_NAMES)]
 conv = cc.pandas_convert(pd.Series(df['country'].unique()), to='ISO3', not_found=None)
 m = dict(zip(df['country'].unique(), conv))
 def iso3(n):
@@ -44,6 +50,20 @@ def iso3(n):
 df['iso3'] = df['country'].map(iso3)
 df = df[df['iso3'].notna()].copy()
 df['income_group'] = df['iso3'].map(INC).map(LAB)
+
+# Sanity check: two *different* source country names silently colliding on the same ISO3
+# would blend/overwrite one real country's NDVI trend with another's (this is exactly how
+# the Georgia bug above was found -- "Georgia" and "S Georgia & S Sandwich Is" both
+# resolved to GEO). This is distinct from large countries like China or Russia
+# legitimately having several polygon-part rows per year under one name -- pivot_table's
+# mean aggregation already handles that safely. Only flag it when more than one distinct
+# `country` name maps to the same ISO3, and only among countries that get an income tier
+# (collisions among places we drop anyway, e.g. Gaza Strip/West Bank both -> PSE, are
+# harmless since PSE has no World Bank tier here).
+_classified = df[df['income_group'].notna()]
+_name_counts = _classified.groupby('iso3')['country'].nunique()
+_dupes = sorted(_name_counts[_name_counts > 1].index.tolist())
+assert not _dupes, f"ISO3 collision among classified countries: {_dupes} -- two source names are mapping to the same code"
 
 piv = df.pivot_table(index=['iso3','income_group'], columns='year', values='ndvi').reindex(columns=range(2000,2025))
 full = piv.dropna()
@@ -71,16 +91,15 @@ stats = {'n':len(countries),'pct_greener':round(float((pct[2024]>0).mean()*100))
          'top_green':[[name(i[0]),round(float(p24[i]),1),i[1]] for i in p24.index[-6:][::-1]],
          'top_brown':[[name(i[0]),round(float(p24[i]),1),i[1]] for i in p24.index[:6]]}
 
-data = {'sample':False,'years':years,'groups':groups,'countries':countries,'stats':stats}
-block = '/*NDVI_DATA_START*/const NDVI='+json.dumps(data,separators=(',',':'),ensure_ascii=False)+';/*NDVI_DATA_END*/'
-html = open(INDEX, encoding='utf-8').read()
-if not re.search(r'/\*NDVI_DATA_START\*/.*?/\*NDVI_DATA_END\*/', html, flags=re.S):
-    sys.exit('markers not found in index.html')
-# replacement passed as a function so backslash sequences in `block` aren't treated as regex escapes
-html2 = re.sub(r'/\*NDVI_DATA_START\*/.*?/\*NDVI_DATA_END\*/', lambda _: block, html, flags=re.S)
-open(INDEX,'w',encoding='utf-8').write(html2)
-
-# also write the joined intermediate for transparency
+# The current index.html fetches greening_with_income.csv directly at runtime (no
+# embedded data block to inject into) -- this pipeline's job is just to produce that
+# CSV and print the headline stats so GLOBAL_STATS/REGION_COPY in index.html can be
+# spot-checked or updated if the underlying numbers change.
 df[df['iso3'].isin([c['iso3'] for c in countries])][['iso3','country','income_group','year','ndvi']]\
   .to_csv('greening_with_income.csv', index=False)
+
 print(f"Done: {len(countries)} countries. within/between = {within:.1f}/{between:.1f} = {within/between:.1f}x, corr={corr:.2f}")
+print(f"pct_greener={stats['pct_greener']}%, global_mean={stats['global_mean']}%")
+print("group2024:", gm2024)
+print("top_green:", stats['top_green'])
+print("top_brown:", stats['top_brown'])
