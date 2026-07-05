@@ -2,7 +2,7 @@
 
 **An interactive globe that tests a hypothesis with real satellite data — and finds the hypothesis wrong.**
 
-[Live site](index.html) · DSC 80, UC San Diego
+[**Live site →**](https://sonalishyma.github.io/The-Greening-Divide/) · DSC 80, UC San Diego
 
 ---
 
@@ -92,7 +92,7 @@ Then open `http://localhost:8000`.
 
 ## Deployment
 
-Push this repo to GitHub and enable GitHub Pages from the root of the `main` branch — the site is fully static and self-contained.
+Already live at [sonalishyma.github.io/The-Greening-Divide](https://sonalishyma.github.io/The-Greening-Divide/) via GitHub Pages, serving directly from the root of the `main` branch — the site is fully static and self-contained, so no build step is involved.
 
 ## Credits
 
