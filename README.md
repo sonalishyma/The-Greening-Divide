@@ -2,7 +2,7 @@
 
 **An interactive globe that tests a hypothesis with real satellite data — and finds the hypothesis wrong.**
 
-[Live site](index.html) · DSC 106 (Data Visualization), UC San Diego
+[Live site](index.html) · DSC 80, UC San Diego
 
 ---
 
