@@ -1,0 +1,3 @@
+pandas==3.0.3
+country_converter==1.3.2
+numpy==2.2.3

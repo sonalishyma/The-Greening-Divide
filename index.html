@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Greening Divide — Does Wealth Explain Who's Greening?</title>
+<meta name="description" content="An interactive globe story testing whether global vegetation greening from 2000-2024 favors wealthy countries. Across 166 countries, it doesn't — geography and water explain far more than income.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121314;
+  --muted:#5f6264;
+  --panel:rgba(255,255,255,.74);
+  --panel-strong:rgba(255,255,255,.9);
+  --edge:rgba(255,255,255,.72);
+  --shadow:0 34px 80px rgba(20,28,34,.24);
+  --green:#2ca25f;
+  --green-2:#62bd83;
+  --blue:#103f91;
+  --orange:#e76f51;
+  --sand:#f5efd6;
+  --ocean:#1e4a58;
+  --map-bg:#d7d6d2;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(118,184,137,.28), transparent 31%),
+    radial-gradient(circle at 86% 56%, rgba(223,106,75,.16), transparent 28%),
+    #eef0ec;
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-variant-numeric:tabular-nums;
+}
+button,select{font:inherit}
+button{cursor:pointer}
+.app{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  min-height:620px;
+  background:var(--map-bg);
+}
+#globe{
+  position:absolute;
+  inset:0;
+  background:var(--map-bg);
+}
+#globe.fallback-globe{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(12,47,56,1) 0 29%, transparent 29.2%),
+    radial-gradient(circle at 50% 52%, rgba(229,225,207,.95) 0 20%, transparent 20.2%),
+    linear-gradient(var(--map-bg),var(--map-bg));
+}
+#globe.fallback-globe::before{
+  content:"";
+  position:absolute;
+  left:22%;
+  top:18%;
+  width:58vw;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:
+    radial-gradient(ellipse at 48% 34%, rgba(242,239,226,.95) 0 15%, transparent 15.5%),
+    radial-gradient(ellipse at 47% 58%, rgba(38,154,102,.88) 0 13%, transparent 13.5%),
+    radial-gradient(ellipse at 58% 58%, rgba(223,106,75,.55) 0 9%, transparent 9.5%),
+    radial-gradient(circle at center, var(--ocean) 0 68%, transparent 68.3%);
+  filter:saturate(1.05);
+}
+#globe.fallback-globe::after{
+  content:"";
+  position:absolute;
+  left:24%;
+  top:12%;
+  width:68vw;
+  height:58vh;
+  background:repeating-linear-gradient(100deg, rgba(45,166,104,.72) 0 10px, rgba(19,111,156,.64) 10px 18px, transparent 18px 38px);
+  clip-path:ellipse(42% 32% at 47% 55%);
+  opacity:.72;
+}
+.topbar{
+  position:absolute;
+  z-index:20;
+  top:0;
+  left:0;
+  right:0;
+  min-height:84px;
+  display:grid;
+  grid-template-columns:minmax(220px,1fr) auto minmax(420px,1fr);
+  align-items:start;
+  gap:22px;
+  pointer-events:none;
+}
+.brand{
+  padding:18px 22px;
+  pointer-events:auto;
+}
+.brand-title{
+  margin:0;
+  font-size:22px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+.about{
+  margin-top:8px;
+  border:0;
+  background:transparent;
+  color:#444;
+  padding:0;
+  font-weight:700;
+  font-size:15px;
+}
+.tabs{
+  pointer-events:auto;
+  display:grid;
+  grid-template-columns:repeat(3,240px);
+  background:rgba(255,255,255,.56);
+  border-radius:0 0 20px 20px;
+  overflow:hidden;
+  box-shadow:0 28px 62px rgba(20,24,24,.13);
+  backdrop-filter:blur(20px) saturate(150%);
+}
+.tab{
+  border:0;
+  background:rgba(255,255,255,.22);
+  padding:17px 20px 16px;
+  min-height:82px;
+  color:#1a1b1c;
+  border-top:3px solid transparent;
+}
+.tab + .tab{border-left:1px solid rgba(0,0,0,.035)}
+.tab strong{
+  display:block;
+  font-size:18px;
+  line-height:1.1;
+  font-weight:900;
+  letter-spacing:-.015em;
+}
+.tab span{
+  display:block;
+  margin-top:9px;
+  color:#656565;
+  font-size:13px;
+  font-weight:800;
+}
+.tab.active{
+  background:rgba(255,255,255,.62);
+  border-top-color:#1c67d2;
+}
+.controls{
+  pointer-events:auto;
+  justify-self:end;
+  display:grid;
+  grid-template-columns:auto 280px auto 122px;
+  align-items:center;
+  gap:12px;
+  padding:18px 22px 0 0;
+}
+.label{
+  color:#525456;
+  font-size:15px;
+  line-height:1.05;
+  font-weight:800;
+}
+select{
+  width:100%;
+  height:45px;
+  border:0;
+  border-radius:11px;
+  padding:0 42px 0 18px;
+  color:#171819;
+  background:rgba(255,255,255,.75);
+  box-shadow:0 18px 36px rgba(24,28,28,.12);
+  outline:none;
+  font-weight:700;
+}
+.story{
+  position:absolute;
+  z-index:10;
+  left:6vw;
+  bottom:15vh;
+  width:min(570px,38vw);
+  pointer-events:none;
+}
+.story h1{
+  margin:0 0 22px;
+  font-size:clamp(42px,4.4vw,60px);
+  line-height:.98;
+  letter-spacing:-.055em;
+  font-weight:900;
+}
+.glass{
+  border:1px solid var(--edge);
+  background:linear-gradient(135deg, rgba(255,255,255,.78), rgba(207,237,218,.52) 58%, rgba(126,159,174,.55));
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px) saturate(160%);
+}
+.story-card{
+  border-radius:18px;
+  padding:24px 26px;
+  color:#5e6161;
+  font-size:21px;
+  line-height:1.55;
+  font-weight:700;
+}
+.summary{
+  position:absolute;
+  z-index:10;
+  right:4vw;
+  bottom:7vh;
+  width:min(486px,31vw);
+  border-radius:18px;
+  padding:24px 24px 22px;
+  display:none;
+}
+.summary.visible{display:block}
+.summary h2{
+  margin:0 0 18px;
+  font-size:22px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+  font-weight:900;
+}
+.summary .small-title{
+  margin:16px 0 8px;
+  color:#52585a;
+  font-size:15px;
+  font-weight:800;
+}
+.metric-row{
+  display:grid;
+  grid-template-columns:58px 1fr 58px;
+  align-items:center;
+  gap:10px;
+  margin:8px 0;
+  font-weight:700;
+}
+.bar{
+  height:13px;
+  border-radius:999px;
+  background:rgba(125,132,130,.16);
+  overflow:hidden;
+}
+.bar i{display:block;height:100%;border-radius:inherit;background:#42aa73}
+.stat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.stat{
+  min-height:80px;
+  border:1px solid rgba(255,255,255,.64);
+  border-radius:13px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.2);
+}
+.stat b{
+  display:block;
+  color:var(--green);
+  font-size:22px;
+  line-height:1;
+  margin-bottom:7px;
+  font-weight:900;
+}
+.stat.decline b{color:var(--orange)}
+.stat span{
+  display:block;
+  color:#555;
+  font-size:14px;
+  line-height:1.18;
+  font-weight:700;
+}
+.summary-note{
+  margin:18px 0 0;
+  color:#555c5e;
+  font-size:14px;
+  line-height:1.35;
+  font-weight:700;
+}
+.tour{
+  position:absolute;
+  z-index:30;
+  top:114px;
+  left:50%;
+  transform:translateX(8%);
+  width:min(595px,42vw);
+  min-height:350px;
+  border-radius:22px;
+  padding:30px 30px;
+  display:none;
+}
+.tour.visible{display:block}
+.tour-kicker{
+  color:#5b5d5f;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+.tour h2{
+  margin:16px 0 20px;
+  font-size:34px;
+  line-height:1.05;
+  letter-spacing:-.045em;
+  font-weight:900;
+}
+.tour p{
+  margin:0;
+  color:#555d5f;
+  font-size:22px;
+  line-height:1.45;
+  font-weight:650;
+}
+.tour-actions{
+  position:absolute;
+  right:30px;
+  bottom:28px;
+  display:flex;
+  gap:14px;
+}
+.pill-btn{
+  border:0;
+  border-radius:999px;
+  padding:15px 25px;
+  background:rgba(255,255,255,.76);
+  color:#222;
+  box-shadow:0 16px 34px rgba(20,24,24,.08);
+  font-size:21px;
+  font-weight:900;
+}
+.pill-btn.dark{background:#222;color:#fff}
+.legend{
+  position:absolute;
+  z-index:14;
+  left:36px;
+  bottom:38px;
+  display:flex;
+  align-items:center;
+  gap:17px;
+  font-size:15px;
+  font-weight:900;
+  color:#1e2223;
+  text-shadow:0 1px 2px rgba(255,255,255,.7);
+}
+.legend-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.ramp{
+  width:61px;
+  height:14px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#efe7d3,#c8d18f,#4fb66f,#159978,#103f91);
+  box-shadow:0 0 0 1px rgba(255,255,255,.6);
+}
+.swatch{width:18px;height:18px;border-radius:6px;background:var(--green)}
+.swatch.orange{background:var(--orange)}
+.spike{
+  width:19px;
+  height:21px;
+  border-radius:4px;
+  transform:skewX(-6deg);
+  background:linear-gradient(180deg,#103f91,#159978,#2ca25f);
+}
+.mapbox-mark{
+  position:absolute;
+  z-index:14;
+  left:12px;
+  bottom:10px;
+  color:rgba(30,36,36,.78);
+  font-size:19px;
+  font-weight:900;
+  text-shadow:0 1px 1px #fff;
+}
+.zoom{
+  position:absolute;
+  z-index:14;
+  right:25px;
+  top:134px;
+  width:44px;
+  border:1px solid rgba(0,0,0,.14);
+  border-radius:8px;
+  overflow:hidden;
+  background:rgba(255,255,255,.72);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+.zoom button{
+  width:42px;
+  height:40px;
+  border:0;
+  border-bottom:1px solid rgba(0,0,0,.1);
+  background:transparent;
+  font-size:25px;
+  line-height:1;
+  font-weight:900;
+}
+.zoom button:last-child{border-bottom:0;font-size:18px}
+.year-split{
+  position:absolute;
+  z-index:12;
+  inset:84px 0 0;
+  display:none;
+  pointer-events:none;
+}
+.year-split.visible{display:block}
+.split-line{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:50%;
+  width:7px;
+  margin-left:-4px;
+  background:#050505;
+  border-radius:6px;
+}
+.year-chip{
+  position:absolute;
+  top:54%;
+  left:calc(50% - 82px);
+  display:grid;
+  gap:8px;
+}
+.year-chip span{
+  display:block;
+  background:rgba(30,30,30,.86);
+  color:#fff;
+  border-radius:7px;
+  padding:7px 11px;
+  font-size:19px;
+  line-height:1;
+  font-weight:900;
+}
+.year-chip .muted{background:rgba(70,70,70,.55)}
+.year-chip .right{
+  position:absolute;
+  left:86px;
+  top:27px;
+}
+.modal-backdrop{
+  position:absolute;
+  z-index:40;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(34,41,38,.4);
+  backdrop-filter:blur(8px);
+}
+.modal-backdrop.visible{display:flex}
+.intro{
+  width:min(1030px,82vw);
+  border-radius:30px;
+  padding:66px 66px 56px;
+  background:linear-gradient(140deg,rgba(255,255,255,.93),rgba(255,255,255,.8) 62%,rgba(231,221,205,.72));
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 42px 96px rgba(23,28,28,.24);
+}
+.intro .kicker{
+  margin:0 0 12px;
+  color:#525456;
+  letter-spacing:.14em;
+  font-size:24px;
+  font-weight:900;
+}
+.intro h2{
+  margin:0 0 22px;
+  font-size:clamp(56px,6vw,96px);
+  line-height:.98;
+  letter-spacing:-.07em;
+  font-weight:900;
+}
+.intro p{
+  max-width:920px;
+  margin:0;
+  color:#54585a;
+  font-size:23px;
+  line-height:1.5;
+  font-weight:650;
+}
+.intro-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin:30px 0;
+}
+.intro-card{
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:18px;
+  padding:20px 22px;
+  background:rgba(255,255,255,.48);
+}
+.intro-card b{
+  display:block;
+  margin-bottom:8px;
+  font-size:19px;
+  font-weight:900;
+}
+.intro-card span{
+  color:#51585a;
+  font-size:17px;
+  line-height:1.35;
+  font-weight:650;
+}
+.chip-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin:8px 0 28px;
+}
+.info-chip{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-radius:999px;
+  padding:11px 16px;
+  background:rgba(255,255,255,.54);
+  color:#465052;
+  font-size:18px;
+  font-weight:800;
+}
+.dot{width:20px;height:20px;border-radius:50%;background:#dccca3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+.dot.dark{background:linear-gradient(135deg,#159978,#103f91)}
+.dot.growth{background:#2ca463}
+.dot.decline{background:#df6a4b}
+.modal-actions{display:flex;align-items:center;gap:18px}
+.status{color:#5e6264;font-size:16px;font-weight:750}
+.final{
+  width:min(1240px,78vw);
+  max-height:88vh;
+  overflow:auto;
+  border-radius:30px;
+  padding:54px 56px 30px;
+  position:relative;
+}
+.close{
+  position:absolute;
+  top:22px;
+  right:22px;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.82);
+  font-size:30px;
+  line-height:1;
+  font-weight:800;
+}
+.final .kicker{
+  color:var(--green);
+  letter-spacing:.14em;
+  font-size:16px;
+  font-weight:900;
+}
+.final h2{
+  max-width:900px;
+  margin:14px 0 20px;
+  font-size:clamp(44px,5vw,76px);
+  line-height:1;
+  letter-spacing:-.06em;
+  font-weight:900;
+}
+.final p{
+  color:#51585a;
+  font-size:21px;
+  line-height:1.45;
+  font-weight:650;
+}
+.takeaways{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin:34px 0 22px;
+}
+.takeaway{
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:18px;
+  padding:24px;
+  background:rgba(255,255,255,.36);
+}
+.takeaway em{
+  display:inline-block;
+  margin-bottom:18px;
+  border-radius:999px;
+  padding:8px 16px;
+  background:rgba(255,255,255,.56);
+  color:var(--green);
+  font-style:normal;
+  font-size:15px;
+  letter-spacing:.12em;
+  font-weight:900;
+}
+.takeaway b{
+  display:block;
+  font-size:22px;
+  line-height:1.14;
+  margin-bottom:14px;
+  font-weight:900;
+}
+.takeaway p{font-size:17px;margin:0}
+.why{
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:18px;
+  padding:22px 28px;
+  background:rgba(255,255,255,.36);
+}
+.why h3{
+  margin:0 0 10px;
+  font-size:22px;
+  font-weight:900;
+}
+.why p{font-size:17px;margin:8px 0}
+.final-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:14px;
+  padding-top:26px;
+}
+.final-actions .pill-btn.green{background:#39a866;color:#fff}
+.loading{
+  position:absolute;
+  z-index:50;
+  left:50%;
+  bottom:32px;
+  transform:translateX(-50%);
+  color:#4f5556;
+  font-weight:800;
+}
+body.dark{
+  --map-bg:#101617;
+  --panel:rgba(28,34,34,.7);
+  --panel-strong:rgba(35,42,42,.9);
+  --edge:rgba(255,255,255,.16);
+  --ink:#f4f4f1;
+  --muted:#c0c3be;
+  color:var(--ink);
+  background:#101617;
+}
+body.dark .app{background:#101617}
+body.dark .brand-title,body.dark .tab strong,body.dark .story h1,body.dark .summary h2,body.dark .tour h2{color:#f5f5f2}
+body.dark .about,body.dark .label,body.dark .tab span,body.dark .story-card,body.dark .summary-note,body.dark .metric-row,body.dark .tour p{color:#d6d8d3}
+body.dark select,body.dark .tabs,body.dark .tab{background:rgba(36,42,42,.72);color:#f5f5f2}
+body.dark .glass{background:linear-gradient(135deg,rgba(28,35,35,.84),rgba(26,74,54,.48),rgba(39,76,90,.6))}
+body.dark .legend{color:#f5f5f2;text-shadow:0 1px 2px #000}
+body.dark .intro,body.dark .final{background:linear-gradient(140deg,rgba(28,34,34,.94),rgba(32,42,39,.86),rgba(48,62,66,.8))}
+body.dark .intro p,body.dark .intro-card span,body.dark .final p{color:#d5d8d2}
+@media(max-width:1100px){
+  .topbar{grid-template-columns:1fr;gap:10px}
+  .brand{padding-bottom:0}
+  .tabs{justify-self:center;grid-template-columns:repeat(3,minmax(150px,1fr));width:min(94vw,720px);border-radius:16px}
+  .controls{justify-self:center;grid-template-columns:auto minmax(190px,1fr) auto 110px;width:94vw;padding:0}
+  .story{left:24px;bottom:120px;width:min(560px,58vw)}
+  .summary{right:24px;width:min(430px,42vw)}
+  .tour{top:190px;left:auto;right:24px;transform:none;width:min(560px,48vw)}
+}
+@media(max-width:760px){
+  body{overflow:auto}.app{min-height:980px;height:100svh}
+  .topbar{position:fixed}.brand{padding:12px 16px}.brand-title{font-size:19px}
+  .tabs{grid-template-columns:1fr 1fr 1fr}.tab{padding:10px 8px;min-height:64px}.tab strong{font-size:14px}.tab span{font-size:10px}
+  .controls{grid-template-columns:1fr 1fr;gap:8px;padding:0 12px}.label{display:none}
+  .story{left:16px;right:16px;bottom:168px;width:auto}.story h1{font-size:40px}.story-card{font-size:16px;padding:18px}
+  .summary{left:16px;right:16px;bottom:16px;width:auto;padding:18px}.summary.visible{display:none}
+  .tour{left:16px;right:16px;top:210px;width:auto;min-height:300px;padding:22px}.tour p{font-size:17px}.tour h2{font-size:28px}
+  .legend{left:16px;right:16px;bottom:76px;flex-wrap:wrap;font-size:12px}
+  .zoom{top:230px;right:14px}
+  .intro,.final{width:94vw;padding:32px 24px}.intro h2,.final h2{font-size:44px}.intro p,.final p{font-size:17px}
+  .intro-cards,.takeaways{grid-template-columns:1fr}.chip-row{gap:8px}.info-chip{font-size:14px}
+}
+</style>
+</head>
+<body>
+<main class="app" aria-label="The Greening Divide interactive map">
+  <div id="globe" role="img" aria-label="Interactive globe showing vegetation intensity and change"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <h1 class="brand-title">The Greening Divide</h1>
+    </div>
+    <nav class="tabs" aria-label="Visualization mode">
+      <button class="tab" data-mode="compare"><strong>Compare Years</strong><span>Earlier year beside 2024</span></button>
+      <button class="tab active" data-mode="vegetation"><strong>Vegetation 2024</strong><span>Current vegetation intensity</span></button>
+      <button class="tab" data-mode="change"><strong>Show Change</strong><span>Growth and decline since 2000</span></button>
+    </nav>
+    <div class="controls">
+      <div class="label">Jump<br>to</div>
+      <select id="regionSelect" aria-label="Jump to region">
+        <option value="global">Global overview</option>
+        <option value="pakistan">Pakistan (lower-mid)</option>
+        <option value="eritrea">Eritrea (low)</option>
+        <option value="turkmenistan">Turkmenistan (upper-mid)</option>
+        <option value="iceland">Iceland (high)</option>
+      </select>
+      <div class="label">Theme</div>
+      <select id="themeSelect" aria-label="Theme">
+        <option value="auto">Auto</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+  </header>
+
+  <section class="story" aria-live="polite">
+    <h1 id="storyTitle">Testing the Wealth Hypothesis</h1>
+    <div class="story-card glass" id="storyBody"></div>
+  </section>
+
+  <aside class="summary glass" id="summaryPanel" aria-live="polite"></aside>
+
+  <section class="tour glass" id="tourPanel" aria-live="polite">
+    <div class="tour-kicker" id="tourKicker">STEP 1 OF 5</div>
+    <h2 id="tourTitle">We Expect Wealth to Win</h2>
+    <p id="tourText"></p>
+    <div class="tour-actions">
+      <button class="pill-btn" id="skipTourBtn">Skip Tour</button>
+      <button class="pill-btn dark" id="nextTourBtn">Next</button>
+    </div>
+  </section>
+
+  <div class="legend" id="legend"></div>
+  <div class="mapbox-mark">mapbox</div>
+  <div class="zoom" aria-label="Map controls">
+    <button id="zoomIn" aria-label="Zoom in">+</button>
+    <button id="zoomOut" aria-label="Zoom out">-</button>
+    <button id="tilt" aria-label="Tilt map">▲</button>
+  </div>
+  <div class="year-split" id="yearSplit" aria-hidden="true">
+    <div class="split-line"></div>
+    <div class="year-chip"><span>2000</span><span class="muted">2012</span><span class="right">2024</span></div>
+  </div>
+
+  <div class="modal-backdrop visible" id="introModal">
+    <section class="intro">
+      <p class="kicker">GLOBAL VEGETATION &amp; INCOME, 2000-2024</p>
+      <h2>Does Earth's Greening Favor Rich Countries?</h2>
+      <p>Satellite data shows most of the planet greening since 2000. The obvious hypothesis is that this tracks wealth — richer countries, more resources for conservation and agriculture, greener land. We tested that hypothesis against real MODIS NDVI data for 166 countries with complete 2000–2024 coverage, grouped by World Bank income tier. It doesn't hold. Income explains almost nothing about who greened; geography and water do.</p>
+      <div class="intro-cards">
+        <div class="intro-card"><b>Near-Universal Greening</b><span>83% of countries are greener in 2024 than their own 2000–2005 baseline — this isn't a rich-country story, it's almost everywhere.</span></div>
+        <div class="intro-card"><b>Income Is the Wrong Lens</b><span>The four income groups land within 1.6 points of each other by 2024. Spread inside each group is about 10× the spread between groups.</span></div>
+      </div>
+      <div class="chip-row">
+        <span class="info-chip"><i class="dot"></i>Light colors = lower NDVI</span>
+        <span class="info-chip"><i class="dot dark"></i>Dark green and blue = higher NDVI</span>
+        <span class="info-chip"><i class="dot growth"></i>Green = vegetation growth</span>
+        <span class="info-chip"><i class="dot decline"></i>Orange = vegetation decline</span>
+        <span class="info-chip"><i class="spike"></i>Taller spikes = higher vegetation density or greater change</span>
+      </div>
+      <div class="modal-actions">
+        <button class="pill-btn dark" id="startBtn">Start Exploring</button>
+        <span class="status" id="loadStatus">Map loading...</span>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="finalModal">
+    <section class="final glass">
+      <button class="close" id="closeFinal" aria-label="Close">×</button>
+      <div class="kicker">FINAL TAKEAWAY</div>
+      <h2>Income doesn't explain who's greening — geography and water do.</h2>
+      <p>From 2000 to 2024, 166 countries with clean MODIS coverage show near-universal greening. We set out to test whether that greening favors wealthy countries. It doesn't: the real driver cuts across income tiers entirely.</p>
+      <div class="takeaways">
+        <article class="takeaway"><em>AND</em><b>Greening is nearly universal</b><p>83% of countries are greener in 2024 than their own 2000–2005 baseline, across every income tier.</p></article>
+        <article class="takeaway"><em style="color:var(--orange)">BUT</em><b>Wealth barely matters</b><p>Group means differ by only 1.6 points. Within-group spread is about 10× the between-group spread, and income rank correlates with greening at just −0.31.</p></article>
+        <article class="takeaway"><em style="color:#245599">THEREFORE</em><b>Geography is the real signal</b><p>Eritrea (low income) and Pakistan (lower-middle income) are the two fastest-greening countries on Earth, driven by dryland and irrigation expansion. Turkmenistan (upper-middle) and Iceland (high income) are the two fastest-browning. Both extremes cut straight across the income ladder.</p></article>
+      </div>
+      <div class="why">
+        <h3>Why this visualization reveals the takeaway</h3>
+        <p>The globe first shows the surprising global pattern: nearly everywhere is greening. Jumping between individual countries then shows the inversion directly — the greenest gains and the sharpest declines both appear at opposite ends of the income spectrum, not sorted by wealth.</p>
+        <p>By moving from the global picture to country-level evidence, the visualization lets readers discover the takeaway — income is the wrong lens — rather than simply being told what to believe.</p>
+      </div>
+      <div class="final-actions">
+        <button class="pill-btn" id="againBtn">Explore the Story Again</button>
+        <button class="pill-btn green" id="continueBtn">Continue Exploring</button>
+      </div>
+    </section>
+  </div>
+  <div class="loading" id="loading">Loading vegetation data...</div>
+</main>
+
+<script src="globe.gl.min.js"></script>
+<script>
+const GLOBAL_STATS={n:166,pctGreener:83,within:6.8,between:0.7,ratio:10.1,corr:-0.31,globalMean:5.4,
+  groups:{'Low income':6.4,'Lower middle income':4.8,'Upper middle income':5.3,'High income':5.7}};
+const OCEAN_LABELS=[
+  {name:'North Pacific Ocean',lat:30,lng:-170},
+  {name:'South Pacific Ocean',lat:-25,lng:-140},
+  {name:'North Atlantic Ocean',lat:35,lng:-40},
+  {name:'South Atlantic Ocean',lat:-25,lng:-15},
+  {name:'Indian Ocean',lat:-20,lng:80},
+  {name:'Arctic Ocean',lat:80,lng:20},
+  {name:'Southern Ocean',lat:-65,lng:0}
+];
+const REGION_COPY={
+  global:{
+    title:'Testing the Wealth Hypothesis',
+    body:'166 countries have complete, stable MODIS NDVI coverage from 2000 to 2024. 83% of them are greener today than their own 2000–2005 baseline — greening is close to universal. The question is whether that greening tracks income. Group the countries by World Bank tier and the four lines land within 1.6 points of each other: income explains almost none of the variation. Jump to a country below to see how far individual nations swing from their own income group\'s average.',
+    point:{lat:6,lng:12,altitude:1.95},
+    summary:{isGlobal:true,name:'All 166 Countries'}
+  },
+  pakistan:{
+    title:'Pakistan — Lower-Middle Income',
+    body:'Pakistan is the second-fastest-greening country on Earth in this dataset: NDVI up 30.6% versus its 2000–2005 baseline, driven by irrigation expansion across the Indus basin, not by national wealth. Its own income tier (lower-middle) averages only +4.8% by 2024 — Pakistan is greening roughly 6× faster than its income peers.',
+    point:{lat:30,lng:70,altitude:1.4},
+    summary:{iso3:'PAK',name:'Pakistan',group:'Lower middle income',ndvi:[0.1718,0.1954,0.2335],change:30.6,rank:2,direction:'greening'}
+  },
+  eritrea:{
+    title:'Eritrea — Low Income',
+    body:'Eritrea tops the list: +34.0% NDVI versus baseline, the single fastest-greening country of the 166 analyzed — and it is classified low income, the poorest World Bank tier. Its own group (low income) averages +6.4% by 2024. Wealth did not produce this greening; dryland and agricultural land-use change did.',
+    point:{lat:15,lng:39,altitude:1.5},
+    summary:{iso3:'ERI',name:'Eritrea',group:'Low income',ndvi:[0.1636,0.1542,0.2183],change:34.0,rank:1,direction:'greening'}
+  },
+  turkmenistan:{
+    title:'Turkmenistan — Upper-Middle Income',
+    body:'Turkmenistan is the single fastest-browning country in the dataset: NDVI down 11.9% versus its 2000–2005 baseline. It sits in the upper-middle income tier, whose group average is actually positive (+5.3%). Arid-land degradation overwhelms whatever wealth advantage this tier has on average.',
+    point:{lat:39,lng:59,altitude:1.5},
+    summary:{iso3:'TKM',name:'Turkmenistan',group:'Upper middle income',ndvi:[0.1209,0.1302,0.1193],change:-11.9,rank:1,direction:'browning'}
+  },
+  iceland:{
+    title:'Iceland — High Income',
+    body:'Iceland — the wealthiest tier in this dataset — is the second-fastest-browning country on Earth: NDVI down 11.7% versus baseline. Its own high-income group averages +5.7% by 2024. If greening favored the rich, Iceland should be near the top, not the bottom.',
+    point:{lat:65,lng:-19,altitude:1.3},
+    summary:{iso3:'ISL',name:'Iceland',group:'High income',ndvi:[0.1574,0.1503,0.1459],change:-11.7,rank:2,direction:'browning'}
+  }
+};
+const TOUR=[
+  {mode:'vegetation',region:'global',title:'We Expect Wealth to Win',text:'Richer countries have more resources for irrigation, conservation, and land management. The obvious hypothesis is that global greening since 2000 should favor wealthy nations.'},
+  {mode:'change',region:'global',title:'Greening Is Nearly Universal',text:'Across 166 countries with complete MODIS coverage, 83% are greener in 2024 than their own 2000–2005 baseline. This isn\'t a rich-country phenomenon — it shows up almost everywhere, at every income level.'},
+  {mode:'change',region:'eritrea',title:'The Fastest Greening Is Poor, Not Rich',text:'Eritrea (low income) and Pakistan (lower-middle income) are the two fastest-greening countries in the dataset, at +34.0% and +30.6%. Both sit near the bottom of the World Bank income ladder — the opposite of what the wealth hypothesis predicts.'},
+  {mode:'change',region:'iceland',title:'The Fastest Browning Is Rich, Not Poor',text:'Turkmenistan (upper-middle income) and Iceland (high income) are the two fastest-browning countries in the dataset, at −11.9% and −11.7%. Wealth offered no protection against decline.'},
+  {mode:'change',region:'global',title:'Geography Is the Real Signal',text:'Within-group spread is about 10× the spread between income groups, and income rank correlates with greening at just −0.31. The pattern that actually explains the data is geographic: irrigated drylands green fastest; arid and cold regions brown — regardless of income tier.'}
+];
+const modeLabels={
+  vegetation:'Lower NDVI&nbsp;&nbsp;Higher NDVI',
+  change:'Vegetation growth',
+  compare:'Lower NDVI&nbsp;&nbsp;Higher NDVI'
+};
+window.addEventListener('error',event=>{
+  if(event.message&&event.message.includes("Cannot read properties of null (reading 'opacity')")){
+    event.preventDefault();
+  }
+});
+const state={mode:'vegetation',region:'global',tour:-1,data:new Map(),features:[],bars:[],globe:null,polysReady:false,zoom:1};
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+
+function parseCsv(text){
+  const lines=text.trim().split(/\r?\n/);
+  const header=lines.shift().split(',');
+  return lines.map(line=>{
+    const cols=line.split(',');
+    const row={};
+    header.forEach((h,i)=>row[h]=cols[i]);
+    return row;
+  });
+}
+function mean(arr){return arr.reduce((a,b)=>a+b,0)/arr.length}
+function mix(a,b,t){return a.map((x,i)=>Math.round(x+(b[i]-x)*t))}
+function rgb(c){return '#'+c.map(v=>Math.max(0,Math.min(255,v)).toString(16).padStart(2,'0')).join('')}
+const NDVI_RAMP=[
+  [0,[245,239,222]],[.1,[231,218,177]],[.22,[214,222,163]],[.38,[171,214,140]],
+  [.55,[110,199,133]],[.72,[54,175,143]],[.88,[41,145,171]],[1,[62,110,196]]
+];
+function ndviColor(v){
+  const t=Math.max(0,Math.min(1,(v-.15)/.62));
+  for(let i=1;i<NDVI_RAMP.length;i++){
+    if(t<=NDVI_RAMP[i][0]){
+      const [t0,c0]=NDVI_RAMP[i-1],[t1,c1]=NDVI_RAMP[i];
+      return rgb(mix(c0,c1,(t-t0)/(t1-t0)));
+    }
+  }
+  return rgb(NDVI_RAMP[NDVI_RAMP.length-1][1]);
+}
+function changeColor(v){return v>0?'#2ca25f':'#e76f51'}
+function getDatum(f){
+  const p=f.properties||{};
+  return state.data.get(p.ISO_A3)||state.data.get(p.ADM0_A3)||state.data.get(p.SOV_A3);
+}
+function centroid(feature){
+  const geom=feature.geometry;
+  const coords=geom.type==='Polygon'?geom.coordinates:geom.coordinates.flat();
+  const ring=coords[0]||[];
+  if(!ring.length)return null;
+  let lng=0,lat=0,n=0;
+  ring.forEach(pt=>{lng+=pt[0];lat+=pt[1];n++});
+  return {lng:lng/n,lat:lat/n};
+}
+function buildData(rows){
+  const byIso=new Map();
+  rows.forEach(r=>{
+    const iso=r.iso3;
+    if(!byIso.has(iso))byIso.set(iso,{iso,country:r.country,group:r.income_group,years:{}});
+    byIso.get(iso).years[+r.year]=+r.ndvi;
+  });
+  byIso.forEach(d=>{
+    const baseline=mean([2000,2001,2002,2003,2004,2005].map(y=>d.years[y]).filter(Number.isFinite));
+    d.ndvi2000=d.years[2000]??baseline;
+    d.ndvi2012=d.years[2012]??baseline;
+    d.ndvi2024=d.years[2024]??baseline;
+    d.change=((d.ndvi2024-baseline)/baseline)*100;
+  });
+  state.data=byIso;
+}
+function polygonColor(f){
+  const d=getDatum(f);
+  return d?'#cbb98d':'#c2ae82';
+}
+function polygonAltitude(){return .01;}
+const INCOME_RANK={'Low income':1,'Lower middle income':2,'Upper middle income':3,'High income':4};
+function wealthAltitude(group){
+  const r=INCOME_RANK[group]||1;
+  return .02+(r-1)/3*.34;
+}
+function changeRadius(v){return .35+Math.min(2.3,Math.abs(v)/9)}
+function countryChangePoints(){
+  return [...state.data.values()].filter(d=>d.lat!=null&&Math.abs(d.change)>=.8);
+}
+function percentile(arr,p){
+  const s=[...arr].sort((a,b)=>a-b);
+  return s[Math.max(0,Math.min(s.length-1,Math.floor(p*(s.length-1))))];
+}
+function gridNorm(v,p05,p95){return Math.max(0,Math.min(1,(v-p05)/(p95-p05+1e-9)));}
+function gridHeight(norm){
+  if(norm<.15)return .024;
+  if(norm<.35)return .024+(norm-.15)/.20*.03;
+  return .054+Math.pow(norm,2.1)*.26;
+}
+function gridValue(d){return state.mode==='compare'?d.ndvi_base:d.ndvi_2024;}
+function gridStatsFor(){
+  return state.mode==='compare'?state.gridStats.base:state.gridStats.y24;
+}
+function currentPoints(){
+  if(state.mode==='change')return countryChangePoints();
+  return state.grid||[];
+}
+function unifiedPointColor(d){
+  if(state.mode==='change')return changeColor(d.change);
+  return ndviColor(gridValue(d));
+}
+function unifiedPointRadius(d){
+  if(state.mode==='change')return changeRadius(d.change);
+  return .29;
+}
+function unifiedPointAltitude(d){
+  if(state.mode==='change')return wealthAltitude(d.group);
+  const {p05,p95}=gridStatsFor();
+  return gridHeight(gridNorm(gridValue(d),p05,p95));
+}
+function unifiedPointLabel(d){
+  if(state.mode==='change'){
+    return `<div style="font-family:Inter;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.92);box-shadow:0 12px 28px rgba(0,0,0,.18);color:#151515"><b>${d.country}</b><br>${d.group}<br>Change: ${d.change>=0?'+':''}${d.change.toFixed(1)}%<br><i>spike height = income tier</i></div>`;
+  }
+  return `<div style="font-family:Inter;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.92);box-shadow:0 10px 22px rgba(0,0,0,.16);color:#151515;font-size:13px">NDVI: ${gridValue(d).toFixed(3)}</div>`;
+}
+function refreshGlobe(){
+  if(!state.globe||!state.polysReady)return;
+  state.globe
+    .polygonCapColor(polygonColor)
+    .polygonAltitude(polygonAltitude)
+    .polygonSideColor(()=>'#173d47')
+    .pointsMerge(state.mode!=='change')
+    .pointsData(currentPoints());
+}
+function setMode(mode){
+  state.mode=mode;
+  $$('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  $('#summaryPanel').classList.toggle('visible',mode==='change');
+  $('#yearSplit').classList.toggle('visible',mode==='compare');
+  updateLegend();
+  refreshGlobe();
+}
+function setRegion(region){
+  state.region=region;
+  $('#regionSelect').value=region;
+  const copy=REGION_COPY[region];
+  $('#storyTitle').textContent=copy.title;
+  $('#storyBody').textContent=copy.body;
+  renderSummary(copy.summary);
+  if(state.globe)state.globe.pointOfView({...copy.point,altitude:copy.point.altitude*state.zoom},1200);
+}
+function renderSummary(s){
+  if(s.isGlobal){
+    $('#summaryPanel').innerHTML=`
+      <h2>${s.name} Summary</h2>
+      <div class="small-title">The headline numbers</div>
+      <div class="stat-grid">
+        <div class="stat"><b>${GLOBAL_STATS.pctGreener}%</b><span>of countries greener than their 2000–05 baseline</span></div>
+        <div class="stat"><b>${GLOBAL_STATS.ratio}×</b><span>within-group spread vs. between-group spread</span></div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat decline"><b>${GLOBAL_STATS.corr}</b><span>correlation, income rank vs. greening</span></div>
+        <div class="stat"><b>${GLOBAL_STATS.n}</b><span>countries with clean 2000–2024 coverage</span></div>
+      </div>
+      <div class="small-title">2024 change by income group</div>
+      ${Object.entries(GLOBAL_STATS.groups).map(([g,v])=>`
+        <div class="metric-row"><span>${g.replace(' income','')}</span><div class="bar"><i style="width:${Math.round(v/8*100)}%"></i></div><span>+${v.toFixed(1)}%</span></div>
+      `).join('')}
+      <p class="summary-note">Change is % NDVI vs. each country's own 2000–2005 baseline. Group lines are unweighted means. Source: MODIS Terra NDVI, World Bank income tiers.</p>`;
+    return;
+  }
+  const groupAvg=GLOBAL_STATS.groups[s.group];
+  const rankLabel=s.direction==='greening'?`#${s.rank} greenest of ${GLOBAL_STATS.n}`:`#${s.rank} fastest-browning of ${GLOBAL_STATS.n}`;
+  $('#summaryPanel').innerHTML=`
+    <h2>${s.name} Summary</h2>
+    <div class="small-title">NDVI trend (2000 / 2012 / 2024)</div>
+    ${[2000,2012,2024].map((y,i)=>`
+      <div class="metric-row"><span>${y}</span><div class="bar"><i style="width:${Math.round(s.ndvi[i]*100)}%"></i></div><span>${s.ndvi[i].toFixed(3)}</span></div>
+    `).join('')}
+    <div class="small-title">Change vs. 2000–05 baseline</div>
+    <div class="stat-grid">
+      <div class="${s.change>=0?'stat':'stat decline'}"><b>${s.change>=0?'+':''}${s.change.toFixed(1)}%</b><span>${s.group}</span></div>
+      <div class="${s.direction==='greening'?'stat':'stat decline'}"><b>${rankLabel}</b><span>worldwide, out of 166 countries</span></div>
+    </div>
+    <div class="small-title">For comparison</div>
+    <div class="stat-grid">
+      <div class="stat"><b>${groupAvg>=0?'+':''}${groupAvg.toFixed(1)}%</b><span>average for ${s.group}</span></div>
+      <div class="stat"><b>+${GLOBAL_STATS.globalMean.toFixed(1)}%</b><span>average across all 166 countries</span></div>
+    </div>
+    <p class="summary-note">${s.name} sits far outside its own income tier's average — evidence that income tier predicts very little about an individual country's trajectory.</p>`;
+}
+function updateLegend(){
+  if(state.mode==='change'){
+    $('#legend').innerHTML='<span class="legend-item"><i class="swatch"></i>Dot = growth</span><span class="legend-item"><i class="swatch orange"></i>Dot = decline</span><span class="legend-item">Bigger dot = larger change</span><span class="legend-item"><i class="spike"></i>Taller spike = higher-income country</span>';
+  }else{
+    $('#legend').innerHTML=`<span class="legend-item"><i class="ramp"></i>${modeLabels[state.mode]}</span><span class="legend-item"><i class="spike"></i>Taller spikes = greener, denser vegetation</span><span class="legend-item">Each spike = one real ~55km MODIS grid cell</span>`;
+  }
+}
+function showTour(i){
+  state.tour=i;
+  const panel=$('#tourPanel');
+  if(i<0){panel.classList.remove('visible');return}
+  const t=TOUR[i];
+  setMode(t.mode);
+  setRegion(t.region);
+  panel.classList.add('visible');
+  $('#tourKicker').textContent=`STEP ${i+1} OF ${TOUR.length}`;
+  $('#tourTitle').textContent=t.title;
+  $('#tourText').textContent=t.text;
+  $('#nextTourBtn').textContent=i===TOUR.length-1?'Finish':'Next';
+}
+function finishTour(){
+  showTour(-1);
+  $('#finalModal').classList.add('visible');
+}
+function applyTheme(value){
+  const dark=value==='dark'||(value==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.body.classList.toggle('dark',dark);
+  if(state.globe)state.globe.backgroundColor(dark?'#101617':'#d7d6d2');
+}
+function initGlobe(){
+  const el=$('#globe');
+  state.globe=Globe()(el)
+    .backgroundColor('#d7d6d2')
+    .showAtmosphere(false)
+    .globeImageUrl('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4nGOU84pgYGBgYgADAAjwAMQ5LCYIAAAAAElFTkSuQmCC')
+    .polygonsTransitionDuration(0)
+    .polygonStrokeColor(()=> '#2b5b68')
+    .polygonLabel(f=>{
+      const d=getDatum(f);
+      if(!d)return (f.properties&&f.properties.ADMIN)||'';
+      return `<div style="font-family:Inter;padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.92);box-shadow:0 12px 28px rgba(0,0,0,.18);color:#151515"><b>${d.country}</b><br>${d.group}<br>NDVI 2024: ${d.ndvi2024.toFixed(3)}<br>Change: ${d.change>=0?'+':''}${d.change.toFixed(1)}%</div>`;
+    })
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointColor(unifiedPointColor)
+    .pointRadius(unifiedPointRadius)
+    .pointAltitude(unifiedPointAltitude)
+    .pointResolution(4)
+    .pointsTransitionDuration(0)
+    .pointLabel(unifiedPointLabel)
+    .labelsData(OCEAN_LABELS)
+    .labelLat('lat')
+    .labelLng('lng')
+    .labelText('name')
+    .labelSize(1.4)
+    .labelColor(()=>'rgba(230,236,238,0.6)')
+    .labelDotRadius(0)
+    .labelResolution(2)
+    .labelIncludeDot(false)
+    .labelAltitude(0.006)
+    ;
+  state.globe.controls().autoRotate=false;
+  state.globe.controls().enablePan=false;
+  const size=()=>state.globe.width(el.clientWidth).height(el.clientHeight);
+  size();
+  addEventListener('resize',size);
+}
+async function load(){
+  const [csv,geo,grid]=await Promise.all([
+    fetch('greening_with_income.csv').then(r=>r.text()),
+    fetch('countries.geojson').then(r=>r.json()),
+    fetch('grid_ndvi.json').then(r=>r.ok?r.json():[]).catch(()=>[])
+  ]);
+  buildData(parseCsv(csv));
+  state.features=geo.features.filter(f=>f.properties.ISO_A2!=='AQ');
+  state.features.forEach(f=>{
+    const d=getDatum(f);
+    if(!d)return;
+    const c=centroid(f);
+    if(!c)return;
+    d.lat=c.lat;d.lng=c.lng;
+  });
+  state.grid=grid;
+  if(grid.length){
+    state.gridStats={
+      y24:{p05:percentile(grid.map(d=>d.ndvi_2024),.05),p95:percentile(grid.map(d=>d.ndvi_2024),.95)},
+      base:{p05:percentile(grid.map(d=>d.ndvi_base),.05),p95:percentile(grid.map(d=>d.ndvi_base),.95)}
+    };
+  }
+  try{
+    initGlobe();
+    state.globe.polygonsData(state.features);
+    state.polysReady=true;
+  }catch(err){
+    console.error('Globe initialization failed',err);
+    $('#globe').classList.add('fallback-globe');
+  }
+  setMode(state.mode);
+  setRegion(state.region);
+  applyTheme($('#themeSelect').value);
+  $('#loading').style.display='none';
+  $('#loadStatus').textContent='Map ready. Click Start to explore.';
+}
+
+$$('.tab').forEach(btn=>btn.addEventListener('click',()=>setMode(btn.dataset.mode)));
+$('#regionSelect').addEventListener('change',e=>setRegion(e.target.value));
+$('#themeSelect').addEventListener('change',e=>applyTheme(e.target.value));
+$('#startBtn').addEventListener('click',()=>{$('#introModal').classList.remove('visible');showTour(0)});
+$('#skipTourBtn').addEventListener('click',()=>showTour(-1));
+$('#nextTourBtn').addEventListener('click',()=>state.tour===TOUR.length-1?finishTour():showTour(state.tour+1));
+$('#closeFinal').addEventListener('click',()=>$('#finalModal').classList.remove('visible'));
+$('#continueBtn').addEventListener('click',()=>$('#finalModal').classList.remove('visible'));
+$('#againBtn').addEventListener('click',()=>{$('#finalModal').classList.remove('visible');showTour(0)});
+$('#zoomIn').addEventListener('click',()=>{state.zoom=Math.max(.65,state.zoom*.82);setRegion(state.region)});
+$('#zoomOut').addEventListener('click',()=>{state.zoom=Math.min(1.9,state.zoom*1.2);setRegion(state.region)});
+$('#tilt').addEventListener('click',()=>state.globe.pointOfView({...REGION_COPY[state.region].point,altitude:REGION_COPY[state.region].point.altitude*state.zoom},700));
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if($('#themeSelect').value==='auto')applyTheme('auto')});
+
+setRegion('global');
+updateLegend();
+load().catch(err=>{
+  console.error(err);
+  $('#loading').textContent='Could not load map data. Run this page through a local server.';
+  $('#loadStatus').textContent='Data failed to load. Try python3 -m http.server.';
+});
+</script>
+</body>
+</html>

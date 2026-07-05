@@ -1,0 +1,642 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: file:///Users/sonalisingh/Downloads/index_4.html
+Subject: =?utf-8?Q?The=20Greening=20Divide=20=E2=80=94=20Global=20Greening=20Inequ?=
+ =?utf-8?Q?ality=20Explorer?=
+Date: Thu, 2 Jul 2026 22:03:02 -0700
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----"
+
+
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----
+Content-Type: text/html
+Content-ID: <frame-19A195588D505BB9316D76BA537E53CF@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///Users/sonalisingh/Downloads/index_4.html
+
+<!DOCTYPE html><html lang=3D"en"><head><meta http-equiv=3D"Content-Type" co=
+ntent=3D"text/html; charset=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/=
+css" href=3D"cid:css-b7140125-f5ce-47f8-bd21-60004a6aa5f8@mhtml.blink" /><l=
+ink rel=3D"stylesheet" type=3D"text/css" href=3D"cid:css-78b620a2-acd5-43fd=
+-b9a5-cc64cdb84d77@mhtml.blink" /><link rel=3D"stylesheet" type=3D"text/css=
+" href=3D"cid:css-ab86fa77-a940-4701-a436-f21d9cc067f7@mhtml.blink" />
+
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+<title>The Greening Divide =E2=80=94 Global Greening Inequality Explorer</t=
+itle>
+<meta name=3D"description" content=3D"Satellites show the Earth getting gre=
+ener since 2000. This explorer asks the harder question: who gets the green=
+ing? NDVI trends across World Bank income groups, 2000=E2=80=932024.">
+<link rel=3D"preconnect" href=3D"https://fonts.googleapis.com/">
+<link href=3D"https://fonts.googleapis.com/css2?family=3DSpace+Grotesk:wght=
+@400;500;700&amp;family=3DArchivo:wght@400;500;600&amp;display=3Dswap" rel=
+=3D"stylesheet">
+
+</head>
+<body>
+
+<div id=3D"sampleBanner" style=3D"display: block;">=E2=9A=A0 Demonstration =
+data =E2=80=94 the numbers on this page are placeholders. Replace them with=
+ the project's real NDVI export: run <code>python prepare_data.py your_expo=
+rt.csv</code> (see README).</div>
+
+<header>
+  <div class=3D"stars"></div>
+  <div class=3D"wrap">
+    <p class=3D"eyebrow">Global Greening Inequality Explorer =C2=B7 DSC 106=
+, UC San Diego</p>
+    <h1>THE <span class=3D"g">GREENING</span><br><span class=3D"b">DIVIDE</=
+span></h1>
+    <p class=3D"sub">Satellites show large parts of the Earth getting green=
+er since 2000. This explorer asks the harder question: <strong>who gets the=
+ greening?</strong> Vegetation trends (NDVI), 2000=E2=80=932024, split by W=
+orld Bank income group.</p>
+    <p class=3D"auth"><strong>Sonali Singh</strong> =C2=B7 [add original DS=
+C 106 teammates before publishing]</p>
+  </div>
+  <div class=3D"scrollcue">Scroll =E2=86=93</div>
+</header>
+
+<section><div class=3D"wrap">
+  <p class=3D"eyebrow">Chapter 1 =C2=B7 Context</p>
+  <h2>The Earth is greening =E2=80=94 that part isn't controversial</h2>
+  <p class=3D"lede">Two decades of satellite vegetation records show widesp=
+read increases in leaf area and greenness across the planet, driven by CO=
+=E2=82=82 fertilization, warming in cold regions, and =E2=80=94 heavily =E2=
+=80=94 agricultural intensification. Global averages, though, are where ine=
+quality hides. This project splits the same signal by the World Bank's inco=
+me groups and watches the lines diverge.</p>
+</div></section>
+
+<section style=3D"padding-top:20px"><div class=3D"wrap">
+  <p class=3D"eyebrow">Chapter 2 =C2=B7 The globe</p>
+  <h2>Watch 25 years sweep across the planet</h2>
+  <div class=3D"scrolly">
+    <div class=3D"steps" id=3D"steps">
+      <div class=3D"step" data-step=3D"0"><div class=3D"card"><h3>2000=E2=
+=80=932005: the baseline</h3><p>Every country's greening is measured agains=
+t its own early-2000s average, so the map starts near neutral. Color =3D pe=
+rcent change in NDVI vs that baseline.</p></div></div>
+      <div class=3D"step" data-step=3D"1"><div class=3D"card"><h3>Sweep to =
+2024</h3><p>As the years advance, green deepens where vegetation gained and=
+ brown marks decline. The pattern isn't uniform =E2=80=94 and it isn't rand=
+om.</p></div></div>
+      <div class=3D"step" data-step=3D"2"><div class=3D"card"><h3>Now isola=
+te low-income countries</h3><p>Dim everything else and the divide shows its=
+elf: the places with the least economic capacity are, on average, seeing th=
+e least of the greening. Scroll on to explore freely =E2=80=94 drag the glo=
+be, scrub the years, filter by group.</p></div></div>
+    </div>
+    <div class=3D"globecol">
+      <div id=3D"globe" role=3D"img" aria-label=3D"Interactive globe showin=
+g NDVI percent change by country for the selected year"><div style=3D"posit=
+ion: relative;"><div><div class=3D"scene-container" style=3D"position: rela=
+tive; width: 2560px; height: 640px;"><div class=3D"scene-nav-info" style=3D=
+"display: none;">Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-=
+click: pan</div><div class=3D"scene-tooltip"></div><canvas data-engine=3D"t=
+hree.js r161" width=3D"2560" height=3D"640" style=3D"display: block; touch-=
+action: none; width: 2560px; height: 640px;"></canvas><div style=3D"overflo=
+w: hidden; position: absolute; top: 0px; pointer-events: none; width: 2560p=
+x; height: 640px;"></div></div></div></div></div>
+      <div class=3D"controls">
+        <span class=3D"yr disp" id=3D"yearLabel">2005</span>
+        <input type=3D"range" id=3D"yearSlider" min=3D"0" max=3D"24" value=
+=3D"5" aria-label=3D"Year">
+        <button class=3D"btn" id=3D"playBtn" aria-pressed=3D"false">=E2=96=
+=B6 Play</button>
+      </div>
+      <div class=3D"groupbtns" id=3D"groupBtns"><button class=3D"gb" aria-p=
+ressed=3D"false" style=3D"color: rgb(228, 87, 46);"><span class=3D"dot" sty=
+le=3D"background:#E4572E"></span>Low</button><button class=3D"gb" aria-pres=
+sed=3D"false" style=3D"color: rgb(227, 179, 76);"><span class=3D"dot" style=
+=3D"background:#E3B34C"></span>Lower middle</button><button class=3D"gb" ar=
+ia-pressed=3D"false" style=3D"color: rgb(111, 177, 160);"><span class=3D"do=
+t" style=3D"background:#6FB1A0"></span>Upper middle</button><button class=
+=3D"gb" aria-pressed=3D"false" style=3D"color: rgb(91, 141, 239);"><span cl=
+ass=3D"dot" style=3D"background:#5B8DEF"></span>High</button></div>
+      <div class=3D"ramp"><span>Browning</span><div class=3D"rampbar"></div=
+><span>Greening</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section><div class=3D"wrap">
+  <p class=3D"eyebrow">Chapter 3 =C2=B7 The divergence</p>
+  <h2>Four income groups, one widening gap</h2>
+  <p class=3D"lede">Mean NDVI change relative to each country's 2000=E2=80=
+=932005 baseline, averaged within World Bank income groups. Hover to read v=
+alues by year.</p>
+  <div class=3D"chartbox">
+    <svg id=3D"lines" viewBox=3D"0 0 960 460" preserveAspectRatio=3D"xMidYM=
+id meet"><line x1=3D"56" x2=3D"936" y1=3D"416" y2=3D"416" stroke=3D"#27335E=
+" stroke-width=3D"0.6"></line>
+  <text x=3D"46" y=3D"420" fill=3D"#9FA8C7" font-size=3D"12" text-anchor=3D=
+"end" font-family=3D"Archivo">-2%</text><line x1=3D"56" x2=3D"936" y1=3D"36=
+3.73333333333335" y2=3D"363.73333333333335" stroke=3D"#27335E" stroke-width=
+=3D"1.6"></line>
+  <text x=3D"46" y=3D"367.73333333333335" fill=3D"#9FA8C7" font-size=3D"12"=
+ text-anchor=3D"end" font-family=3D"Archivo">0%</text><line x1=3D"56" x2=3D=
+"936" y1=3D"311.4666666666667" y2=3D"311.4666666666667" stroke=3D"#27335E" =
+stroke-width=3D"0.6"></line>
+  <text x=3D"46" y=3D"315.4666666666667" fill=3D"#9FA8C7" font-size=3D"12" =
+text-anchor=3D"end" font-family=3D"Archivo">+2%</text><line x1=3D"56" x2=3D=
+"936" y1=3D"259.2" y2=3D"259.2" stroke=3D"#27335E" stroke-width=3D"0.6"></l=
+ine>
+  <text x=3D"46" y=3D"263.2" fill=3D"#9FA8C7" font-size=3D"12" text-anchor=
+=3D"end" font-family=3D"Archivo">+4%</text><line x1=3D"56" x2=3D"936" y1=3D=
+"206.93333333333334" y2=3D"206.93333333333334" stroke=3D"#27335E" stroke-wi=
+dth=3D"0.6"></line>
+  <text x=3D"46" y=3D"210.93333333333334" fill=3D"#9FA8C7" font-size=3D"12"=
+ text-anchor=3D"end" font-family=3D"Archivo">+6%</text><line x1=3D"56" x2=
+=3D"936" y1=3D"154.66666666666669" y2=3D"154.66666666666669" stroke=3D"#273=
+35E" stroke-width=3D"0.6"></line>
+  <text x=3D"46" y=3D"158.66666666666669" fill=3D"#9FA8C7" font-size=3D"12"=
+ text-anchor=3D"end" font-family=3D"Archivo">+8%</text><line x1=3D"56" x2=
+=3D"936" y1=3D"102.39999999999998" y2=3D"102.39999999999998" stroke=3D"#273=
+35E" stroke-width=3D"0.6"></line>
+  <text x=3D"46" y=3D"106.39999999999998" fill=3D"#9FA8C7" font-size=3D"12"=
+ text-anchor=3D"end" font-family=3D"Archivo">+10%</text><line x1=3D"56" x2=
+=3D"936" y1=3D"50.133333333333326" y2=3D"50.133333333333326" stroke=3D"#273=
+35E" stroke-width=3D"0.6"></line>
+  <text x=3D"46" y=3D"54.133333333333326" fill=3D"#9FA8C7" font-size=3D"12"=
+ text-anchor=3D"end" font-family=3D"Archivo">+12%</text><text x=3D"56" y=3D=
+"446" fill=3D"#9FA8C7" font-size=3D"12" text-anchor=3D"middle" font-family=
+=3D"Archivo">2000</text><text x=3D"202.66666666666666" y=3D"446" fill=3D"#9=
+FA8C7" font-size=3D"12" text-anchor=3D"middle" font-family=3D"Archivo">2004=
+</text><text x=3D"349.3333333333333" y=3D"446" fill=3D"#9FA8C7" font-size=
+=3D"12" text-anchor=3D"middle" font-family=3D"Archivo">2008</text><text x=
+=3D"496" y=3D"446" fill=3D"#9FA8C7" font-size=3D"12" text-anchor=3D"middle"=
+ font-family=3D"Archivo">2012</text><text x=3D"642.6666666666666" y=3D"446"=
+ fill=3D"#9FA8C7" font-size=3D"12" text-anchor=3D"middle" font-family=3D"Ar=
+chivo">2016</text><text x=3D"789.3333333333334" y=3D"446" fill=3D"#9FA8C7" =
+font-size=3D"12" text-anchor=3D"middle" font-family=3D"Archivo">2020</text>=
+<text x=3D"936" y=3D"446" fill=3D"#9FA8C7" font-size=3D"12" text-anchor=3D"=
+middle" font-family=3D"Archivo">2024</text><polyline points=3D"56,369.48266=
+666666666 92.66666666666666,349.0986666666667 129.33333333333331,370.528 16=
+6,380.72 202.66666666666666,361.12 239.33333333333334,351.4506666666667 276=
+,373.14133333333336 312.6666666666667,366.0853333333333 349.3333333333333,3=
+40.9973333333333 386,354.06399999999996 422.6666666666667,377.584 459.33333=
+33333333,363.21066666666667 496,360.5973333333333 532.6666666666666,380.72 =
+569.3333333333334,384.1173333333333 606,351.712 642.6666666666666,323.74933=
+33333333 679.3333333333334,330.28266666666667 716,330.544 752.6666666666666=
+,311.4666666666667 789.3333333333334,307.808 826,316.432 862.6666666666666,=
+312.7733333333333 899.3333333333334,288.992 936,301.536" fill=3D"none" stro=
+ke=3D"#E4572E" stroke-width=3D"3" stroke-linejoin=3D"round" stroke-linecap=
+=3D"round"></polyline><circle cx=3D"936" cy=3D"301.536" r=3D"4.5" fill=3D"#=
+E4572E"></circle><polyline points=3D"56,372.6186666666667 92.66666666666666=
+,364.256 129.33333333333331,372.88 166,367.65333333333336 202.6666666666666=
+6,355.632 239.33333333333334,349.6213333333333 276,364.51733333333334 312.6=
+666666666667,350.928 349.3333333333333,338.6453333333333 386,332.6346666666=
+6665 422.6666666666667,328.976 459.3333333333333,316.9546666666667 496,297.=
+87733333333335 532.6666666666666,296.3093333333333 569.3333333333334,292.12=
+8 606,270.96000000000004 642.6666666666666,263.904 679.3333333333334,271.48=
+266666666666 716,261.29066666666665 752.6666666666666,241.42933333333332 78=
+9.3333333333334,238.55466666666666 826,237.50933333333333 862.6666666666666=
+,228.624 899.3333333333334,221.0453333333333 936,222.61333333333332" fill=
+=3D"none" stroke=3D"#E3B34C" stroke-width=3D"3" stroke-linejoin=3D"round" s=
+troke-linecap=3D"round"></polyline><circle cx=3D"936" cy=3D"222.61333333333=
+332" r=3D"4.5" fill=3D"#E3B34C"></circle><polyline points=3D"56,378.6293333=
+333333 92.66666666666666,369.48266666666666 129.33333333333331,376.53866666=
+666664 166,367.9146666666667 202.66666666666666,351.712 239.33333333333334,=
+338.384 276,343.6106666666667 312.6666666666667,334.2026666666667 349.33333=
+33333333,301.7973333333333 386,298.4 422.6666666666667,291.344 459.33333333=
+33333,261.29066666666665 496,233.328 532.6666666666666,219.216 569.33333333=
+33334,209.54666666666665 606,175.0506666666667 642.6666666666666,159.370666=
+66666664 679.3333333333334,152.31466666666668 716,136.89600000000002 752.66=
+66666666666,111.80799999999999 789.3333333333334,99.78666666666668 826,104.=
+49066666666668 862.6666666666666,88.28800000000001 899.3333333333334,65.029=
+33333333334 936,71.5626666666667" fill=3D"none" stroke=3D"#6FB1A0" stroke-w=
+idth=3D"3" stroke-linejoin=3D"round" stroke-linecap=3D"round"></polyline><c=
+ircle cx=3D"936" cy=3D"71.5626666666667" r=3D"4.5" fill=3D"#6FB1A0"></circl=
+e><polyline points=3D"56,370.528 92.66666666666666,367.392 129.333333333333=
+31,372.6186666666667 166,375.75466666666665 202.66666666666666,351.712 239.=
+33333333333334,344.3946666666667 276,348.57599999999996 312.6666666666667,3=
+50.6666666666667 349.3333333333333,323.488 386,322.44266666666664 422.66666=
+66666667,320.352 459.3333333333333,296.048 496,277.75466666666665 532.66666=
+66666666,270.96000000000004 569.3333333333334,258.416 606,233.328 642.66666=
+66666666,219.216 679.3333333333334,215.296 716,202.75199999999998 752.66666=
+66666666,189.68533333333332 789.3333333333334,172.96 826,180.53866666666667=
+ 862.6666666666666,173.744 899.3333333333334,159.63200000000003 936,154.144=
+00000000003" fill=3D"none" stroke=3D"#5B8DEF" stroke-width=3D"3" stroke-lin=
+ejoin=3D"round" stroke-linecap=3D"round"></polyline><circle cx=3D"936" cy=
+=3D"154.14400000000003" r=3D"4.5" fill=3D"#5B8DEF"></circle><line id=3D"gui=
+de" x1=3D"0" x2=3D"0" y1=3D"24" y2=3D"416" stroke=3D"#E3B34C" stroke-width=
+=3D"1" opacity=3D"0"></line></svg>
+    <div id=3D"readout">Hover the chart to read yearly values.</div>
+    <div class=3D"cleg" id=3D"cleg"><span><span class=3D"dot" style=3D"back=
+ground:#E4572E"></span>Low income</span><span><span class=3D"dot" style=3D"=
+background:#E3B34C"></span>Lower middle income</span><span><span class=3D"d=
+ot" style=3D"background:#6FB1A0"></span>Upper middle income</span><span><sp=
+an class=3D"dot" style=3D"background:#5B8DEF"></span>High income</span></di=
+v>
+  </div>
+  <div class=3D"callouts" id=3D"callouts">
+ <div class=3D"co"><div class=3D"big">11.2%</div><p>Upper middle income cou=
+ntries' mean NDVI gain by 2024 =E2=80=94 the strongest of the four groups.<=
+/p></div>
+ <div class=3D"co"><div class=3D"big">+2.4%</div><p>Low-income countries' m=
+ean change over the same period.</p></div>
+ <div class=3D"co"><div class=3D"big">8.8 pts</div><p>The gap between the t=
+op group and low-income countries in 2024 =E2=80=94 the divide in one numbe=
+r.</p></div></div>
+</div></section>
+
+<section><div class=3D"wrap cav">
+  <p class=3D"eyebrow">Chapter 4 =C2=B7 Read this before quoting it</p>
+  <h2>What this does =E2=80=94 and doesn't =E2=80=94 show</h2>
+  <ul>
+    <li><strong>NDVI measures greenness, not wellbeing.</strong> A soybean =
+megafarm and an old-growth forest can green the same pixel; greening is not=
+ automatically good news, and browning is not automatically neglect.</li>
+    <li><strong>Much of the greening is agriculture and CO=E2=82=82.</stron=
+g> Intensified farming and CO=E2=82=82 fertilization drive large shares of =
+the global signal =E2=80=94 the divide partly reflects who can afford inten=
+sification.</li>
+    <li><strong>Country means hide within-country inequality.</strong> A na=
+tional average can mask booming irrigated regions next to degrading dryland=
+s.</li>
+    <li><strong>Income groups are coarse.</strong> World Bank classificatio=
+ns shift over time and bundle very different economies; they're a lens, not=
+ a verdict.</li>
+    <li><strong>Correlation, not causation.</strong> This explorer document=
+s a pattern across income groups; it does not identify the mechanism behind=
+ it.</li>
+  </ul>
+</div></section>
+
+<section style=3D"padding-top:30px"><div class=3D"wrap meth">
+  <p class=3D"eyebrow">Methods &amp; data</p>
+  <h2>How it's built</h2>
+  <p><strong>Signal.</strong> Country-level annual mean NDVI from the MODIS=
+ vegetation-index record (2000=E2=80=932024). For every country, the series=
+ is converted to percent change against that country's own 2000=E2=80=93200=
+5 mean, so each place is compared with itself before places are compared wi=
+th each other.</p>
+  <p><strong>Groups.</strong> Countries are grouped by World Bank income cl=
+assification; group lines are unweighted means across member countries, so =
+small countries count equally and giants don't dominate the story.</p>
+  <p><strong>This page.</strong> A single static site: globe rendered with =
+globe.gl (Natural Earth 110m boundaries), chart hand-drawn in SVG, no build=
+ step. Data lives inline and is regenerated from a CSV export by <code>prep=
+are_data.py</code>.</p>
+</div></section>
+
+<footer><div class=3D"wrap">
+  <p><strong>The Greening Divide =E2=80=94 Global Greening Inequality Explo=
+rer.</strong> DSC 106 (Data Visualization), UC San Diego.</p>
+  <p class=3D"cred">Analysis, data pipeline, and site: <strong>Sonali Singh=
+</strong> =C2=B7 [add original teammates]. Format inspiration =E2=80=94 int=
+eractive globe and scroll narrative =E2=80=94 from =E2=80=9CThe Greening Ea=
+rth?=E2=80=9D by Y. Lin, J. Kavanal, K. Lee &amp; R. Dulgerian (DSC 106), u=
+sed with their permission; all data, analysis, code, and design here are or=
+iginal.</p>
+  <p class=3D"cred">Boundaries: Natural Earth =C2=B7 Vegetation record: MOD=
+IS NDVI =C2=B7 Income groups: World Bank.</p>
+</div></footer>
+
+
+
+
+
+</body></html>
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo:wght@400;500;600&display=swap
+
+@charset "utf-8";
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 400; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLySOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0=
+-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9=
+, U+20AB; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 400; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLyTOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD=
+-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U=
++20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 400; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLydOxKsv4Rn.woff2") format("w=
+off2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U=
++2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2=
+212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 500; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLySOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0=
+-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9=
+, U+20AB; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 500; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLyTOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD=
+-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U=
++20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 500; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLydOxKsv4Rn.woff2") format("w=
+off2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U=
++2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2=
+212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 600; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLySOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0=
+-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9=
+, U+20AB; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 600; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLyTOxKsv4RnUPU.woff2") format=
+("woff2"); unicode-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD=
+-2FF, U+304, U+308, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U=
++20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: Archivo; font-style: normal; font-weight: 600; fo=
+nt-stretch: 100%; font-display: swap; src: url("https://fonts.gstatic.com/s=
+/archivo/v25/k3kPo8UDI-1M0wlSV9XAw6lQkqWY8Q82sLydOxKsv4Rn.woff2") format("w=
+off2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U=
++2DC, U+304, U+308, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2=
+212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 400; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb54C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0,=
+ U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 400; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb94C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+3=
+08, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20=
+AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 400; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2") format("woff2"); unicode-=
+range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+3=
+08, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+F=
+EFF, U+FFFD; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 500; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb54C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0,=
+ U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 500; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb94C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+3=
+08, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20=
+AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 500; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2") format("woff2"); unicode-=
+range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+3=
+08, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+F=
+EFF, U+FFFD; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 700; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb54C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0,=
+ U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 700; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPb94C_k3HqUtEw.woff2") format("woff2"); unico=
+de-range: U+100-2BA, U+2BD-2C5, U+2C7-2CC, U+2CE-2D7, U+2DD-2FF, U+304, U+3=
+08, U+329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20=
+AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Space Grotesk"; font-style: normal; font-weight:=
+ 700; font-display: swap; src: url("https://fonts.gstatic.com/s/spacegrotes=
+k/v22/V8mDoQDjQSkFtoMM3T6r8E7mPbF4C_k3HqU.woff2") format("woff2"); unicode-=
+range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+3=
+08, U+329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+F=
+EFF, U+FFFD; }
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-ab86fa77-a940-4701-a436-f21d9cc067f7@mhtml.blink
+
+@charset "utf-8";
+
+.scene-nav-info { bottom: 5px; width: 100%; text-align: center; color: slat=
+egrey; opacity: 0.7; font-size: 10px; }
+
+.scene-tooltip { top: 0px; color: lavender; font-size: 15px; }
+
+.scene-nav-info, .scene-tooltip { position: absolute; font-family: sans-ser=
+if; pointer-events: none; user-select: none; }
+
+.scene-container canvas:focus { outline: none; }
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-78b620a2-acd5-43fd-b9a5-cc64cdb84d77@mhtml.blink
+
+@charset "utf-8";
+
+.scene-container .clickable { cursor: pointer; }
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-b7140125-f5ce-47f8-bd21-60004a6aa5f8@mhtml.blink
+
+@charset "utf-8";
+
+:root { --space: #0B1026; --space-2: #121B3D; --panel: #161F42; --line: #27=
+335E; --ivory: #F2EFE6; --dim: #9FA8C7; --amber: #E3B34C; --green: #2E9E63;=
+ --brown: #9A6630; --low: #E4572E; --lowmid: #E3B34C; --upmid: #6FB1A0; --h=
+igh: #5B8DEF; }
+
+* { box-sizing: border-box; margin: 0px; padding: 0px; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body { background: var(--space); color: var(--ivory); font-family: Archivo,=
+ system-ui, sans-serif; line-height: 1.6; }
+
+h1, h2, h3, .disp { font-family: "Space Grotesk", sans-serif; }
+
+a { color: var(--amber); }
+
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; bord=
+er-radius: 4px; }
+
+.wrap { max-width: 1100px; margin: 0px auto; padding: 0px 22px; }
+
+.eyebrow { letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.=
+76rem; color: var(--amber); font-weight: 600; }
+
+section { padding: 88px 0px; position: relative; }
+
+h2 { font-size: clamp(1.6rem, 3.4vw, 2.4rem); font-weight: 700; margin: 0.3=
+5em 0px 0.5em; }
+
+.lede { color: var(--dim); max-width: 62ch; font-size: 1.05rem; }
+
+#sampleBanner { display: none; position: sticky; top: 0px; z-index: 60; bac=
+kground: var(--amber); color: rgb(36, 26, 5); font-size: 0.86rem; font-weig=
+ht: 600; text-align: center; padding: 9px 16px; }
+
+#sampleBanner code { background: rgba(0, 0, 0, 0.14); padding: 1px 6px; bor=
+der-radius: 5px; }
+
+header { min-height: 92vh; display: flex; align-items: center; position: re=
+lative; overflow: hidden; background: radial-gradient(1200px 700px at 70% 2=
+0%, #1A2650 0%, var(--space) 55%); }
+
+.stars { position: absolute; inset: 0px; background-image: radial-gradient(=
+1.5px 1.5px at 20% 30%, rgba(255, 255, 255, 0.533) 0px, transparent 60%), r=
+adial-gradient(1px 1px at 60% 70%, rgba(255, 255, 255, 0.4) 0px, transparen=
+t 60%), radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.467) 0px,=
+ transparent 60%), radial-gradient(1.2px 1.2px at 35% 80%, rgba(255, 255, 2=
+55, 0.333) 0px, transparent 60%), radial-gradient(1px 1px at 90% 55%, rgba(=
+255, 255, 255, 0.4) 0px, transparent 60%); pointer-events: none; }
+
+header h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); font-weight: 700; line-h=
+eight: 1.02; }
+
+header h1 .g { color: var(--green); }
+
+header h1 .b { color: var(--brown); }
+
+header .sub { margin: 20px 0px 8px; font-size: 1.1rem; color: var(--dim); m=
+ax-width: 58ch; }
+
+header .auth { margin-top: 26px; font-size: 0.9rem; color: var(--dim); }
+
+header .auth strong { color: var(--ivory); }
+
+.scrollcue { position: absolute; bottom: 26px; left: 50%; transform: transl=
+ateX(-50%); color: var(--dim); font-size: 0.8rem; letter-spacing: 0.12em; t=
+ext-transform: uppercase; }
+
+.scrolly { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 30px; al=
+ign-items: start; }
+
+.steps { padding: 10vh 0px 20vh; }
+
+.step { min-height: 70vh; display: flex; align-items: center; }
+
+.step .card { background: var(--panel); border: 1px solid var(--line); bord=
+er-radius: 16px; padding: 26px; max-width: 420px; opacity: 0.35; transform:=
+ translateY(8px); transition: opacity 0.4s, transform 0.4s; }
+
+.step.active .card { opacity: 1; transform: none; border-color: var(--amber=
+); }
+
+.step h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--ivory); }
+
+.step p { font-size: 0.95rem; color: var(--dim); }
+
+.globecol { position: sticky; top: 0px; height: 100vh; display: flex; flex-=
+direction: column; justify-content: center; }
+
+#globe { width: 100%; height: min(72vh, 640px); border-radius: 18px; overfl=
+ow: hidden; background: transparent; }
+
+.controls { display: flex; gap: 14px; align-items: center; margin-top: 14px=
+; flex-wrap: wrap; }
+
+.yr { font-family: "Space Grotesk"; font-variant-numeric: tabular-nums; fon=
+t-weight: 700; font-size: 2rem; color: var(--amber); min-width: 110px; }
+
+input[type=3D"range"] { flex: 1 1 0%; accent-color: var(--amber); min-width=
+: 160px; }
+
+.btn { background: transparent; border: 1.5px solid var(--line); color: var=
+(--ivory); font-family: Archivo; font-weight: 600; font-size: 0.85rem; bord=
+er-radius: 999px; padding: 8px 16px; cursor: pointer; }
+
+.btn:hover { border-color: var(--amber); }
+
+.btn[aria-pressed=3D"true"] { background: var(--amber); border-color: var(-=
+-amber); color: rgb(36, 26, 5); }
+
+.groupbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+.gb { border-radius: 999px; padding: 6px 14px; font-size: 0.82rem; border: =
+1.5px solid var(--line); background: transparent; color: var(--ivory); curs=
+or: pointer; font-family: Archivo; font-weight: 600; }
+
+.gb .dot { display: inline-block; width: 9px; height: 9px; border-radius: 5=
+0%; margin-right: 6px; vertical-align: 0px; }
+
+.gb[aria-pressed=3D"true"] { border-color: currentcolor; }
+
+.ramp { display: flex; align-items: center; gap: 10px; margin-top: 12px; fo=
+nt-size: 0.78rem; color: var(--dim); }
+
+.rampbar { flex: 1 1 0%; height: 10px; border-radius: 6px; background: line=
+ar-gradient(90deg,var(--brown),#E8E4D0,var(--green)); }
+
+@media (max-width: 880px) {
+  .scrolly { grid-template-columns: 1fr; }
+  .globecol { position: sticky; top: 0px; height: auto; padding: 10px 0px; =
+background: var(--space); z-index: 5; }
+  #globe { height: 52vh; }
+  .steps { padding-top: 2vh; }
+  .step { min-height: 60vh; }
+}
+
+.chartbox { background: var(--panel); border: 1px solid var(--line); border=
+-radius: 18px; padding: 26px; margin-top: 26px; }
+
+#lines { width: 100%; height: auto; display: block; }
+
+.cleg { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; font-s=
+ize: 0.85rem; color: var(--dim); }
+
+.cleg .dot { width: 10px; height: 10px; border-radius: 50%; display: inline=
+-block; margin-right: 6px; }
+
+#readout { font-size: 0.85rem; color: var(--dim); margin-top: 8px; min-heig=
+ht: 1.4em; font-variant-numeric: tabular-nums; }
+
+.callouts { display: grid; grid-template-columns: repeat(auto-fit, minmax(2=
+30px, 1fr)); gap: 16px; margin-top: 26px; }
+
+.co { background: var(--panel); border: 1px solid var(--line); border-radiu=
+s: 14px; padding: 22px; }
+
+.co .big { font-family: "Space Grotesk"; font-size: 2.1rem; font-weight: 70=
+0; color: var(--amber); }
+
+.co p { font-size: 0.88rem; color: var(--dim); margin-top: 6px; }
+
+.cav li { margin: 10px 0px 10px 20px; color: var(--dim); max-width: 75ch; }
+
+.cav strong { color: var(--ivory); }
+
+.meth p { color: var(--dim); max-width: 75ch; margin: 10px 0px; font-size: =
+0.95rem; }
+
+footer { border-top: 1px solid var(--line); padding: 40px 0px; color: var(-=
+-dim); font-size: 0.88rem; }
+
+footer .cred { margin-top: 8px; }
+
+footer strong { color: var(--ivory); }
+------MultipartBoundary--pQGSfAWjzZTC1gZeyCP6TatsykMgTg1Oea3N8wBpy9------
