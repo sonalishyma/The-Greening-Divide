@@ -10,28 +10,30 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#121314;
+  --ink:#15181a;
   --muted:#5f6264;
-  --panel:rgba(255,255,255,.74);
-  --panel-strong:rgba(255,255,255,.9);
-  --edge:rgba(255,255,255,.72);
-  --shadow:0 34px 80px rgba(20,28,34,.24);
+  --panel:rgba(255,255,255,.88);
+  --panel-strong:rgba(255,255,255,.95);
+  --edge:rgba(20,24,22,.07);
+  --shadow:0 24px 60px rgba(20,26,24,.14);
   --green:#2ca25f;
   --green-2:#62bd83;
   --blue:#103f91;
-  --orange:#e76f51;
+  --orange:#df6a42;
   --sand:#f5efd6;
-  --ocean:#1e4a58;
-  --map-bg:#d7d6d2;
+  --ocean:#0c2733;
+  --map-bg:#f4f2ec;
+  --land:#f2f0e7;
+  --land-side:#dfdccf;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{
   overflow:hidden;
   background:
-    radial-gradient(circle at 16% 12%, rgba(118,184,137,.28), transparent 31%),
-    radial-gradient(circle at 86% 56%, rgba(223,106,75,.16), transparent 28%),
-    #eef0ec;
+    radial-gradient(circle at 16% 12%, rgba(118,184,137,.14), transparent 34%),
+    radial-gradient(circle at 86% 56%, rgba(223,106,75,.08), transparent 30%),
+    #f4f2ec;
   color:var(--ink);
   font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-variant-numeric:tabular-nums;
@@ -50,6 +52,7 @@ button{cursor:pointer}
   inset:0;
   background:var(--map-bg);
 }
+#globe.hidden{display:none}
 #globe.fallback-globe{
   overflow:hidden;
   background:
@@ -120,21 +123,21 @@ button{cursor:pointer}
   pointer-events:auto;
   display:grid;
   grid-template-columns:repeat(3,240px);
-  background:rgba(255,255,255,.56);
+  background:rgba(255,255,255,.86);
   border-radius:0 0 20px 20px;
   overflow:hidden;
-  box-shadow:0 28px 62px rgba(20,24,24,.13);
-  backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 24px 56px rgba(20,24,24,.10);
+  backdrop-filter:blur(20px) saturate(140%);
 }
 .tab{
   border:0;
-  background:rgba(255,255,255,.22);
+  background:transparent;
   padding:17px 20px 16px;
   min-height:82px;
   color:#1a1b1c;
   border-top:3px solid transparent;
 }
-.tab + .tab{border-left:1px solid rgba(0,0,0,.035)}
+.tab + .tab{border-left:1px solid rgba(0,0,0,.05)}
 .tab strong{
   display:block;
   font-size:18px;
@@ -150,7 +153,7 @@ button{cursor:pointer}
   font-weight:800;
 }
 .tab.active{
-  background:rgba(255,255,255,.62);
+  background:rgba(255,255,255,.96);
   border-top-color:#1c67d2;
 }
 .controls{
@@ -183,66 +186,72 @@ select{
 .story{
   position:absolute;
   z-index:10;
-  left:6vw;
-  bottom:15vh;
-  width:min(570px,38vw);
+  left:4vw;
+  bottom:9vh;
+  width:min(380px,30vw);
   pointer-events:none;
+  transition:opacity .2s;
 }
+.story.hidden{opacity:0;pointer-events:none}
 .story h1{
-  margin:0 0 22px;
-  font-size:clamp(42px,4.4vw,60px);
-  line-height:.98;
-  letter-spacing:-.055em;
+  margin:0 0 10px;
+  font-size:clamp(22px,2.4vw,32px);
+  line-height:1.05;
+  letter-spacing:-.03em;
   font-weight:900;
 }
 .glass{
   border:1px solid var(--edge);
-  background:linear-gradient(135deg, rgba(255,255,255,.78), rgba(207,237,218,.52) 58%, rgba(126,159,174,.55));
+  background:var(--panel);
   box-shadow:var(--shadow);
-  backdrop-filter:blur(22px) saturate(160%);
+  backdrop-filter:blur(22px) saturate(140%);
 }
 .story-card{
-  border-radius:18px;
-  padding:24px 26px;
+  border-radius:14px;
+  padding:15px 17px;
   color:#5e6161;
-  font-size:21px;
-  line-height:1.55;
-  font-weight:700;
+  font-size:13.5px;
+  line-height:1.48;
+  font-weight:650;
 }
 .summary{
   position:absolute;
   z-index:10;
-  right:4vw;
-  bottom:7vh;
-  width:min(486px,31vw);
-  border-radius:18px;
-  padding:24px 24px 22px;
+  right:3vw;
+  bottom:5vh;
+  top:96px;
+  width:min(360px,28vw);
+  border-radius:16px;
+  padding:18px 18px 16px;
+  overflow-y:auto;
   display:none;
 }
 .summary.visible{display:block}
+.summary.force-hide{display:none}
 .summary h2{
-  margin:0 0 18px;
-  font-size:22px;
+  margin:0 0 12px;
+  font-size:17px;
   line-height:1.15;
   letter-spacing:-.02em;
   font-weight:900;
 }
 .summary .small-title{
-  margin:16px 0 8px;
+  margin:12px 0 6px;
   color:#52585a;
-  font-size:15px;
+  font-size:12.5px;
   font-weight:800;
 }
 .metric-row{
   display:grid;
-  grid-template-columns:58px 1fr 58px;
+  grid-template-columns:48px 1fr 48px;
   align-items:center;
-  gap:10px;
-  margin:8px 0;
+  gap:8px;
+  margin:6px 0;
+  font-size:12.5px;
   font-weight:700;
 }
 .bar{
-  height:13px;
+  height:10px;
   border-radius:999px;
   background:rgba(125,132,130,.16);
   overflow:hidden;
@@ -251,116 +260,128 @@ select{
 .stat-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
+  gap:9px;
 }
 .stat{
-  min-height:80px;
+  min-height:60px;
   border:1px solid rgba(255,255,255,.64);
-  border-radius:13px;
-  padding:14px 16px;
+  border-radius:11px;
+  padding:10px 12px;
   background:rgba(255,255,255,.2);
 }
 .stat b{
   display:block;
   color:var(--green);
-  font-size:22px;
-  line-height:1;
-  margin-bottom:7px;
+  font-size:17px;
+  line-height:1.1;
+  margin-bottom:4px;
   font-weight:900;
 }
 .stat.decline b{color:var(--orange)}
 .stat span{
   display:block;
   color:#555;
-  font-size:14px;
-  line-height:1.18;
+  font-size:11.5px;
+  line-height:1.2;
   font-weight:700;
 }
 .summary-note{
-  margin:18px 0 0;
+  margin:12px 0 0;
   color:#555c5e;
-  font-size:14px;
+  font-size:11.5px;
   line-height:1.35;
   font-weight:700;
 }
 .tour{
   position:absolute;
   z-index:30;
-  top:114px;
-  left:50%;
-  transform:translateX(8%);
-  width:min(595px,42vw);
-  min-height:350px;
-  border-radius:22px;
-  padding:30px 30px;
+  top:96px;
+  right:3vw;
+  width:min(430px,36vw);
+  min-height:180px;
+  max-height:calc(100vh - 130px);
+  overflow:auto;
+  border-radius:18px;
+  padding:20px 22px;
   display:none;
 }
 .tour.visible{display:block}
 .tour-kicker{
   color:#5b5d5f;
-  font-size:16px;
+  font-size:12px;
   font-weight:900;
-  letter-spacing:.12em;
+  letter-spacing:.1em;
 }
 .tour h2{
-  margin:16px 0 20px;
-  font-size:34px;
-  line-height:1.05;
-  letter-spacing:-.045em;
+  margin:10px 0 12px;
+  font-size:22px;
+  line-height:1.1;
+  letter-spacing:-.02em;
   font-weight:900;
 }
 .tour p{
   margin:0;
   color:#555d5f;
-  font-size:22px;
+  font-size:14px;
   line-height:1.45;
-  font-weight:650;
+  font-weight:600;
 }
 .tour-actions{
-  position:absolute;
-  right:30px;
-  bottom:28px;
+  position:static;
+  margin-top:16px;
   display:flex;
-  gap:14px;
+  gap:10px;
 }
 .pill-btn{
   border:0;
   border-radius:999px;
-  padding:15px 25px;
+  padding:11px 20px;
   background:rgba(255,255,255,.76);
   color:#222;
   box-shadow:0 16px 34px rgba(20,24,24,.08);
-  font-size:21px;
+  font-size:15px;
   font-weight:900;
 }
 .pill-btn.dark{background:#222;color:#fff}
 .legend{
   position:absolute;
   z-index:14;
-  left:36px;
-  bottom:38px;
+  left:30px;
+  bottom:34px;
   display:flex;
   align-items:center;
-  gap:17px;
-  font-size:15px;
-  font-weight:900;
-  color:#1e2223;
-  text-shadow:0 1px 2px rgba(255,255,255,.7);
+  flex-wrap:wrap;
+  gap:10px;
+  max-width:min(920px,70vw);
 }
-.legend-item{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  background:rgba(255,255,255,.86);
+  border:1px solid rgba(20,24,22,.06);
+  box-shadow:0 10px 26px rgba(20,24,24,.10);
+  backdrop-filter:blur(14px) saturate(140%);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:14px;
+  font-weight:800;
+  color:#25292a;
+}
 .ramp{
-  width:61px;
-  height:14px;
+  width:52px;
+  height:12px;
   border-radius:999px;
   background:linear-gradient(90deg,#efe7d3,#c8d18f,#4fb66f,#159978,#103f91);
-  box-shadow:0 0 0 1px rgba(255,255,255,.6);
+  box-shadow:0 0 0 1px rgba(0,0,0,.06);
 }
-.swatch{width:18px;height:18px;border-radius:6px;background:var(--green)}
+.swatch{width:14px;height:14px;border-radius:50%;background:var(--green)}
 .swatch.orange{background:var(--orange)}
 .spike{
-  width:19px;
-  height:21px;
-  border-radius:4px;
+  width:15px;
+  height:18px;
+  border-radius:3px;
   transform:skewX(-6deg);
   background:linear-gradient(180deg,#103f91,#159978,#2ca25f);
 }
@@ -397,47 +418,56 @@ select{
   font-weight:900;
 }
 .zoom button:last-child{border-bottom:0;font-size:18px}
-.year-split{
+.compare-wrap{
   position:absolute;
-  z-index:12;
-  inset:84px 0 0;
+  z-index:5;
+  inset:0;
   display:none;
-  pointer-events:none;
 }
-.year-split.visible{display:block}
+.compare-wrap.visible{display:flex}
+.compare-globe{
+  position:relative;
+  width:50%;
+  height:100%;
+  overflow:hidden;
+  background:var(--map-bg);
+}
 .split-line{
   position:absolute;
+  z-index:13;
   top:0;
   bottom:0;
   left:50%;
-  width:7px;
-  margin-left:-4px;
-  background:#050505;
-  border-radius:6px;
+  width:3px;
+  margin-left:-1.5px;
+  background:rgba(10,12,12,.82);
+  pointer-events:none;
 }
 .year-chip{
   position:absolute;
-  top:54%;
-  left:calc(50% - 82px);
-  display:grid;
-  gap:8px;
+  z-index:13;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  pointer-events:none;
 }
+.year-chip-col{display:grid;gap:8px;justify-items:end}
+.year-chip-col.right{justify-items:start}
 .year-chip span{
   display:block;
-  background:rgba(30,30,30,.86);
+  background:rgba(20,22,22,.88);
   color:#fff;
-  border-radius:7px;
-  padding:7px 11px;
-  font-size:19px;
+  border-radius:8px;
+  padding:7px 13px;
+  font-size:17px;
   line-height:1;
   font-weight:900;
+  white-space:nowrap;
 }
-.year-chip .muted{background:rgba(70,70,70,.55)}
-.year-chip .right{
-  position:absolute;
-  left:86px;
-  top:27px;
-}
+.year-chip .muted{background:rgba(255,255,255,.72);color:#222}
 .modal-backdrop{
   position:absolute;
   z-index:40;
@@ -450,82 +480,85 @@ select{
 }
 .modal-backdrop.visible{display:flex}
 .intro{
-  width:min(1030px,82vw);
-  border-radius:30px;
-  padding:66px 66px 56px;
-  background:linear-gradient(140deg,rgba(255,255,255,.93),rgba(255,255,255,.8) 62%,rgba(231,221,205,.72));
-  border:1px solid rgba(255,255,255,.8);
-  box-shadow:0 42px 96px rgba(23,28,28,.24);
+  width:min(820px,78vw);
+  max-height:88vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:36px 40px 30px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(20,24,22,.06);
+  box-shadow:0 36px 84px rgba(20,26,24,.18);
 }
 .intro .kicker{
-  margin:0 0 12px;
+  margin:0 0 8px;
   color:#525456;
-  letter-spacing:.14em;
-  font-size:24px;
+  letter-spacing:.12em;
+  font-size:13px;
   font-weight:900;
 }
 .intro h2{
-  margin:0 0 22px;
-  font-size:clamp(56px,6vw,96px);
-  line-height:.98;
-  letter-spacing:-.07em;
+  margin:0 0 12px;
+  font-size:clamp(28px,3.2vw,42px);
+  line-height:1.04;
+  letter-spacing:-.03em;
   font-weight:900;
 }
 .intro p{
-  max-width:920px;
+  max-width:720px;
   margin:0;
   color:#54585a;
-  font-size:23px;
+  font-size:15px;
   line-height:1.5;
-  font-weight:650;
+  font-weight:600;
 }
 .intro-cards{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:16px;
-  margin:30px 0;
+  gap:10px;
+  margin:18px 0;
 }
 .intro-card{
-  border:1px solid rgba(255,255,255,.7);
-  border-radius:18px;
-  padding:20px 22px;
-  background:rgba(255,255,255,.48);
+  border:1px solid rgba(20,24,22,.07);
+  border-radius:14px;
+  padding:14px 16px;
+  background:rgba(20,24,22,.03);
 }
 .intro-card b{
   display:block;
-  margin-bottom:8px;
-  font-size:19px;
+  margin-bottom:5px;
+  font-size:14px;
   font-weight:900;
 }
 .intro-card span{
   color:#51585a;
-  font-size:17px;
+  font-size:13px;
   line-height:1.35;
-  font-weight:650;
+  font-weight:600;
 }
 .chip-row{
   display:flex;
   flex-wrap:wrap;
-  gap:14px;
-  margin:8px 0 28px;
+  gap:8px;
+  margin:4px 0 18px;
 }
 .info-chip{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:7px;
   border-radius:999px;
-  padding:11px 16px;
-  background:rgba(255,255,255,.54);
+  padding:6px 11px;
+  background:rgba(20,24,22,.045);
+  border:1px solid rgba(20,24,22,.06);
   color:#465052;
-  font-size:18px;
+  font-size:12px;
   font-weight:800;
 }
-.dot{width:20px;height:20px;border-radius:50%;background:#dccca3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+.dot{width:13px;height:13px;border-radius:50%;background:#dccca3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
 .dot.dark{background:linear-gradient(135deg,#159978,#103f91)}
 .dot.growth{background:#2ca463}
 .dot.decline{background:#df6a4b}
-.modal-actions{display:flex;align-items:center;gap:18px}
-.status{color:#5e6264;font-size:16px;font-weight:750}
+.modal-actions{display:flex;align-items:center;gap:14px}
+.status{color:#5e6264;font-size:12px;font-weight:750}
 .final{
   width:min(1240px,78vw);
   max-height:88vh;
@@ -574,17 +607,17 @@ select{
   margin:34px 0 22px;
 }
 .takeaway{
-  border:1px solid rgba(255,255,255,.72);
+  border:1px solid rgba(20,24,22,.07);
   border-radius:18px;
   padding:24px;
-  background:rgba(255,255,255,.36);
+  background:rgba(20,24,22,.025);
 }
 .takeaway em{
   display:inline-block;
   margin-bottom:18px;
   border-radius:999px;
   padding:8px 16px;
-  background:rgba(255,255,255,.56);
+  background:rgba(20,24,22,.05);
   color:var(--green);
   font-style:normal;
   font-size:15px;
@@ -600,10 +633,10 @@ select{
 }
 .takeaway p{font-size:17px;margin:0}
 .why{
-  border:1px solid rgba(255,255,255,.72);
+  border:1px solid rgba(20,24,22,.07);
   border-radius:18px;
   padding:22px 28px;
-  background:rgba(255,255,255,.36);
+  background:rgba(20,24,22,.025);
 }
 .why h3{
   margin:0 0 10px;
@@ -628,50 +661,66 @@ select{
   font-weight:800;
 }
 body.dark{
-  --map-bg:#101617;
-  --panel:rgba(28,34,34,.7);
-  --panel-strong:rgba(35,42,42,.9);
-  --edge:rgba(255,255,255,.16);
+  --map-bg:#12181a;
+  --panel:rgba(30,36,36,.86);
+  --panel-strong:rgba(35,42,42,.94);
+  --edge:rgba(255,255,255,.10);
   --ink:#f4f4f1;
   --muted:#c0c3be;
+  --land:#3a4340;
+  --land-side:#242c2a;
   color:var(--ink);
-  background:#101617;
+  background:#12181a;
 }
-body.dark .app{background:#101617}
-body.dark .brand-title,body.dark .tab strong,body.dark .story h1,body.dark .summary h2,body.dark .tour h2{color:#f5f5f2}
-body.dark .about,body.dark .label,body.dark .tab span,body.dark .story-card,body.dark .summary-note,body.dark .metric-row,body.dark .tour p{color:#d6d8d3}
-body.dark select,body.dark .tabs,body.dark .tab{background:rgba(36,42,42,.72);color:#f5f5f2}
-body.dark .glass{background:linear-gradient(135deg,rgba(28,35,35,.84),rgba(26,74,54,.48),rgba(39,76,90,.6))}
-body.dark .legend{color:#f5f5f2;text-shadow:0 1px 2px #000}
-body.dark .intro,body.dark .final{background:linear-gradient(140deg,rgba(28,34,34,.94),rgba(32,42,39,.86),rgba(48,62,66,.8))}
+body.dark .app{background:#12181a}
+body.dark .brand-title,body.dark .tab strong,body.dark .story h1,body.dark .summary h2,body.dark .tour h2,body.dark .intro h2,body.dark .final h2{color:#f5f5f2}
+body.dark .about,body.dark .label,body.dark .tab span,body.dark .story-card,body.dark .summary-note,body.dark .metric-row,body.dark .tour p,body.dark .stat span,body.dark .small-title{color:#d6d8d3}
+body.dark .stat{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+body.dark select,body.dark .tabs,body.dark .tab{background:rgba(36,42,42,.82);color:#f5f5f2}
+body.dark .tab.active{background:rgba(46,54,54,.96)}
+body.dark .legend-item{background:rgba(32,38,38,.86);border-color:rgba(255,255,255,.08);color:#f0f1ee}
+body.dark .intro,body.dark .final{background:rgba(26,32,32,.96)}
+body.dark .intro-card,body.dark .takeaway,body.dark .why{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+body.dark .info-chip{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08);color:#dfe2de}
 body.dark .intro p,body.dark .intro-card span,body.dark .final p{color:#d5d8d2}
+body.dark .pill-btn{background:rgba(255,255,255,.12);color:#f5f5f2}
+body.dark .pill-btn.dark{background:#f4f4f1;color:#15181a}
 @media(max-width:1100px){
-  .topbar{grid-template-columns:1fr;gap:10px}
+  .topbar{grid-template-columns:1fr;gap:8px}
   .brand{padding-bottom:0}
   .tabs{justify-self:center;grid-template-columns:repeat(3,minmax(150px,1fr));width:min(94vw,720px);border-radius:16px}
   .controls{justify-self:center;grid-template-columns:auto minmax(190px,1fr) auto 110px;width:94vw;padding:0}
-  .story{left:24px;bottom:120px;width:min(560px,58vw)}
-  .summary{right:24px;width:min(430px,42vw)}
-  .tour{top:190px;left:auto;right:24px;transform:none;width:min(560px,48vw)}
+  .story{left:20px;bottom:100px;width:min(400px,52vw)}
+  .summary{right:20px;top:220px;width:min(360px,42vw)}
+  .tour{top:220px;right:20px;width:min(420px,48vw)}
 }
 @media(max-width:760px){
   body{overflow:auto}.app{min-height:980px;height:100svh}
   .topbar{position:fixed}.brand{padding:12px 16px}.brand-title{font-size:19px}
   .tabs{grid-template-columns:1fr 1fr 1fr}.tab{padding:10px 8px;min-height:64px}.tab strong{font-size:14px}.tab span{font-size:10px}
   .controls{grid-template-columns:1fr 1fr;gap:8px;padding:0 12px}.label{display:none}
-  .story{left:16px;right:16px;bottom:168px;width:auto}.story h1{font-size:40px}.story-card{font-size:16px;padding:18px}
-  .summary{left:16px;right:16px;bottom:16px;width:auto;padding:18px}.summary.visible{display:none}
-  .tour{left:16px;right:16px;top:210px;width:auto;min-height:300px;padding:22px}.tour p{font-size:17px}.tour h2{font-size:28px}
+  .story{left:16px;right:16px;bottom:168px;width:auto}
+  .summary{left:16px;right:16px;top:auto;bottom:16px;width:auto;max-height:40vh}.summary.visible{display:none}
+  .tour{left:16px;right:16px;top:210px;width:auto;min-height:180px}
   .legend{left:16px;right:16px;bottom:76px;flex-wrap:wrap;font-size:12px}
   .zoom{top:230px;right:14px}
-  .intro,.final{width:94vw;padding:32px 24px}.intro h2,.final h2{font-size:44px}.intro p,.final p{font-size:17px}
-  .intro-cards,.takeaways{grid-template-columns:1fr}.chip-row{gap:8px}.info-chip{font-size:14px}
+  .intro,.final{width:94vw;padding:24px 20px}
+  .intro-cards,.takeaways{grid-template-columns:1fr}.chip-row{gap:8px}
 }
 </style>
 </head>
 <body>
 <main class="app" aria-label="The Greening Divide interactive map">
   <div id="globe" role="img" aria-label="Interactive globe showing vegetation intensity and change"></div>
+  <div class="compare-wrap" id="compareWrap" aria-hidden="true">
+    <div id="globeLeft" class="compare-globe" role="img" aria-label="Globe showing 2000-2005 baseline vegetation"></div>
+    <div id="globeRight" class="compare-globe" role="img" aria-label="Globe showing 2024 vegetation"></div>
+    <div class="split-line"></div>
+    <div class="year-chip">
+      <div class="year-chip-col"><span>2000</span><span class="muted">2012</span></div>
+      <div class="year-chip-col right"><span>2024</span></div>
+    </div>
+  </div>
 
   <header class="topbar">
     <div class="brand">
@@ -700,7 +749,7 @@ body.dark .intro p,body.dark .intro-card span,body.dark .final p{color:#d5d8d2}
     </div>
   </header>
 
-  <section class="story" aria-live="polite">
+  <section class="story" id="storyPanel" aria-live="polite">
     <h1 id="storyTitle">Testing the Wealth Hypothesis</h1>
     <div class="story-card glass" id="storyBody"></div>
   </section>
@@ -724,11 +773,6 @@ body.dark .intro p,body.dark .intro-card span,body.dark .final p{color:#d5d8d2}
     <button id="zoomOut" aria-label="Zoom out">-</button>
     <button id="tilt" aria-label="Tilt map">▲</button>
   </div>
-  <div class="year-split" id="yearSplit" aria-hidden="true">
-    <div class="split-line"></div>
-    <div class="year-chip"><span>2000</span><span class="muted">2012</span><span class="right">2024</span></div>
-  </div>
-
   <div class="modal-backdrop visible" id="introModal">
     <section class="intro">
       <p class="kicker">GLOBAL VEGETATION &amp; INCOME, 2000-2024</p>
@@ -794,31 +838,31 @@ const REGION_COPY={
   global:{
     title:'Testing the Wealth Hypothesis',
     body:'166 countries have complete, stable MODIS NDVI coverage from 2000 to 2024. 83% of them are greener today than their own 2000–2005 baseline — greening is close to universal. The question is whether that greening tracks income. Group the countries by World Bank tier and the four lines land within 1.6 points of each other: income explains almost none of the variation. Jump to a country below to see how far individual nations swing from their own income group\'s average.',
-    point:{lat:6,lng:12,altitude:2.5},
+    point:{lat:8,lng:8,altitude:3.35},
     summary:{isGlobal:true,name:'All 166 Countries'}
   },
   pakistan:{
     title:'Pakistan — Lower-Middle Income',
     body:'Pakistan is the second-fastest-greening country on Earth in this dataset: NDVI up 30.6% versus its 2000–2005 baseline, driven by irrigation expansion across the Indus basin, not by national wealth. Its own income tier (lower-middle) averages only +4.8% by 2024 — Pakistan is greening roughly 6× faster than its income peers.',
-    point:{lat:30,lng:70,altitude:1.85},
+    point:{lat:30,lng:70,altitude:2.3},
     summary:{iso3:'PAK',name:'Pakistan',group:'Lower middle income',ndvi:[0.1718,0.1954,0.2335],change:30.6,rank:2,direction:'greening'}
   },
   eritrea:{
     title:'Eritrea — Low Income',
     body:'Eritrea tops the list: +34.0% NDVI versus baseline, the single fastest-greening country of the 166 analyzed — and it is classified low income, the poorest World Bank tier. Its own group (low income) averages +6.4% by 2024. Wealth did not produce this greening; dryland and agricultural land-use change did.',
-    point:{lat:15,lng:39,altitude:1.95},
+    point:{lat:15,lng:39,altitude:2.35},
     summary:{iso3:'ERI',name:'Eritrea',group:'Low income',ndvi:[0.1636,0.1542,0.2183],change:34.0,rank:1,direction:'greening'}
   },
   turkmenistan:{
     title:'Turkmenistan — Upper-Middle Income',
     body:'Turkmenistan is the single fastest-browning country in the dataset: NDVI down 11.9% versus its 2000–2005 baseline. It sits in the upper-middle income tier, whose group average is actually positive (+5.3%). Arid-land degradation overwhelms whatever wealth advantage this tier has on average.',
-    point:{lat:39,lng:59,altitude:1.95},
+    point:{lat:39,lng:59,altitude:2.35},
     summary:{iso3:'TKM',name:'Turkmenistan',group:'Upper middle income',ndvi:[0.1209,0.1302,0.1193],change:-11.9,rank:1,direction:'browning'}
   },
   iceland:{
     title:'Iceland — High Income',
     body:'Iceland — the wealthiest tier in this dataset — is the second-fastest-browning country on Earth: NDVI down 11.7% versus baseline. Its own high-income group averages +5.7% by 2024. If greening favored the rich, Iceland should be near the top, not the bottom.',
-    point:{lat:65,lng:-19,altitude:1.7},
+    point:{lat:65,lng:-19,altitude:2.15},
     summary:{iso3:'ISL',name:'Iceland',group:'High income',ndvi:[0.1574,0.1503,0.1459],change:-11.7,rank:2,direction:'browning'}
   }
 };
@@ -839,7 +883,7 @@ window.addEventListener('error',event=>{
     event.preventDefault();
   }
 });
-const state={mode:'vegetation',region:'global',tour:-1,data:new Map(),features:[],bars:[],globe:null,polysReady:false,zoom:1};
+const state={mode:'vegetation',region:'global',tour:-1,data:new Map(),features:[],bars:[],globe:null,polysReady:false,zoom:1,dark:false,modeApplied:false};
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 
@@ -884,6 +928,86 @@ function centroid(feature){
   ring.forEach(pt=>{lng+=pt[0];lat+=pt[1];n++});
   return {lng:lng/n,lat:lat/n};
 }
+function featureByIso3(iso3){
+  return state.features.find(f=>{
+    const p=f.properties||{};
+    return p.ISO_A3===iso3||p.ADM0_A3===iso3||p.SOV_A3===iso3;
+  });
+}
+function featureBBox(feature){
+  let minLng=Infinity,minLat=Infinity,maxLng=-Infinity,maxLat=-Infinity;
+  const geom=feature.geometry;
+  const polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;
+  polys.forEach(poly=>poly[0].forEach(([lng,lat])=>{
+    if(lng<minLng)minLng=lng;if(lng>maxLng)maxLng=lng;
+    if(lat<minLat)minLat=lat;if(lat>maxLat)maxLat=lat;
+  }));
+  return {minLng,minLat,maxLng,maxLat};
+}
+function pointInRing(x,y,ring){
+  let inside=false;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const xi=ring[i][0],yi=ring[i][1],xj=ring[j][0],yj=ring[j][1];
+    const intersect=((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi);
+    if(intersect)inside=!inside;
+  }
+  return inside;
+}
+function pointInPolygonCoords(x,y,polygon){
+  if(!pointInRing(x,y,polygon[0]))return false;
+  for(let k=1;k<polygon.length;k++)if(pointInRing(x,y,polygon[k]))return false;
+  return true;
+}
+function pointInFeature(lng,lat,feature){
+  const geom=feature.geometry;
+  const polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;
+  return polys.some(poly=>pointInPolygonCoords(lng,lat,poly));
+}
+function gridCellAreaKm2(lat){
+  const kmPerDegLat=111.32,kmPerDegLng=111.32*Math.cos(lat*Math.PI/180);
+  return (kmPerDegLat*0.5)*(kmPerDegLng*0.5);
+}
+function computeAreaStats(cells){
+  let growthArea=0,declineArea=0,growthCount=0,declineCount=0;
+  cells.forEach(c=>{
+    if(Math.abs(c.change)<1)return;
+    const area=gridCellAreaKm2(c.lat);
+    if(c.change>0){growthArea+=area;growthCount++}
+    else{declineArea+=area;declineCount++}
+  });
+  const total=growthCount+declineCount;
+  return{
+    growthArea,declineArea,growthCount,declineCount,
+    growthPct:total?Math.round(growthCount/total*100):0,
+    declinePct:total?Math.round(declineCount/total*100):0
+  };
+}
+function countryGridCells(iso3){
+  const feature=featureByIso3(iso3);
+  if(!feature||!state.grid)return[];
+  const bbox=featureBBox(feature);
+  const buf=0.6;
+  return state.grid.filter(c=>
+    c.lng>=bbox.minLng-buf&&c.lng<=bbox.maxLng+buf&&
+    c.lat>=bbox.minLat-buf&&c.lat<=bbox.maxLat+buf&&
+    pointInFeature(c.lng,c.lat,feature)
+  );
+}
+function fmtArea(km2){
+  if(km2>=1e6)return(km2/1e6).toFixed(2)+'M km²';
+  return Math.round(km2).toLocaleString()+' km²';
+}
+function computeAllAreaStats(){
+  if(!state.grid||!state.grid.length)return;
+  REGION_COPY.global.summary.area=computeAreaStats(state.grid);
+  Object.entries(REGION_COPY).forEach(([key,copy])=>{
+    if(key==='global')return;
+    const iso3=copy.summary.iso3;
+    if(!iso3)return;
+    const cells=countryGridCells(iso3);
+    copy.summary.area=computeAreaStats(cells);
+  });
+}
 function buildData(rows){
   const byIso=new Map();
   rows.forEach(r=>{
@@ -902,15 +1026,16 @@ function buildData(rows){
 }
 function polygonColor(f){
   const d=getDatum(f);
-  return d?'#cbb98d':'#c2ae82';
+  if(state.dark)return d?'#3c4642':'#333d39';
+  return d?'#efece0':'#f2f0e7';
 }
 function polygonAltitude(){return .01;}
 const INCOME_RANK={'Low income':1,'Lower middle income':2,'Upper middle income':3,'High income':4};
 function wealthAltitude(group){
   const r=INCOME_RANK[group]||1;
-  return .035+(r-1)/3*.22;
+  return .05+(r-1)/3*.34;
 }
-function changeRadius(v){return .16+Math.min(.5,Math.abs(v)/45)}
+function changeRadius(v){return .34+Math.min(.72,Math.abs(v)/34)}
 function countryChangePoints(){
   return [...state.data.values()].filter(d=>d.lat!=null&&Math.abs(d.change)>=.8);
 }
@@ -920,9 +1045,9 @@ function percentile(arr,p){
 }
 function gridNorm(v,p05,p95){return Math.max(0,Math.min(1,(v-p05)/(p95-p05+1e-9)));}
 function gridHeight(norm){
-  if(norm<.15)return .024;
-  if(norm<.35)return .024+(norm-.15)/.20*.03;
-  return .054+Math.pow(norm,2.1)*.26;
+  if(norm<.15)return .032;
+  if(norm<.35)return .032+(norm-.15)/.20*.04;
+  return .072+Math.pow(norm,2.1)*.34;
 }
 function gridValue(d){return state.mode==='compare'?d.ndvi_base:d.ndvi_2024;}
 function gridStatsFor(){
@@ -938,7 +1063,7 @@ function unifiedPointColor(d){
 }
 function unifiedPointRadius(d){
   if(state.mode==='change')return changeRadius(d.change);
-  return .29;
+  return .34;
 }
 function unifiedPointAltitude(d){
   if(state.mode==='change')return wealthAltitude(d.group);
@@ -951,20 +1076,38 @@ function unifiedPointLabel(d){
   }
   return `<div style="font-family:Inter;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.92);box-shadow:0 10px 22px rgba(0,0,0,.16);color:#151515;font-size:13px">NDVI: ${gridValue(d).toFixed(3)}</div>`;
 }
-function refreshGlobe(){
+function refreshPolygonColors(){
   if(!state.globe||!state.polysReady)return;
   state.globe
     .polygonCapColor(polygonColor)
     .polygonAltitude(polygonAltitude)
-    .polygonSideColor(()=>'#173d47')
+    .polygonSideColor(()=>state.dark?'#242c2a':'#dcd9cb')
+    .polygonStrokeColor(()=>state.dark?'#4a5350':'#cac7ba');
+}
+function hexBinColor(bin){return changeColor(bin.sumWeight)}
+function hexBinAltitude(bin){return .008+Math.min(.045,Math.abs(bin.sumWeight)/900)}
+function refreshGlobe(){
+  if(!state.globe||!state.polysReady)return;
+  refreshPolygonColors();
+  state.globe
     .pointsMerge(state.mode!=='change')
-    .pointsData(currentPoints());
+    .pointsData(currentPoints())
+    .hexBinPointsData(state.mode==='change'?(state.grid||[]):[]);
 }
 function setMode(mode){
+  const changed=state.mode!==mode||!state.modeApplied;
   state.mode=mode;
+  state.modeApplied=true;
   $$('.tab').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(!changed)return;
   $('#summaryPanel').classList.toggle('visible',mode==='change');
-  $('#yearSplit').classList.toggle('visible',mode==='compare');
+  const isCompare=mode==='compare';
+  $('#compareWrap').classList.toggle('visible',isCompare);
+  $('#globe').classList.toggle('hidden',isCompare);
+  if(isCompare){
+    initCompareGlobes();
+    syncCompareView(600);
+  }
   updateLegend();
   refreshGlobe();
 }
@@ -976,6 +1119,21 @@ function setRegion(region){
   $('#storyBody').textContent=copy.body;
   renderSummary(copy.summary);
   if(state.globe)state.globe.pointOfView({...copy.point,altitude:copy.point.altitude*state.zoom},1200);
+  syncCompareView(1200);
+}
+function areaSectionHtml(area){
+  if(!area||(area.growthCount+area.declineCount)===0)return'';
+  return `
+      <div class="small-title">Share of changed grid cells</div>
+      <div class="stat-grid">
+        <div class="stat"><b>${area.growthPct}%</b><span>growth cells</span></div>
+        <div class="stat decline"><b>${area.declinePct}%</b><span>decline cells</span></div>
+      </div>
+      <div class="small-title">Approximate changed area</div>
+      <div class="stat-grid">
+        <div class="stat"><b>${fmtArea(area.growthArea)}</b><span>estimated added green-space area</span></div>
+        <div class="stat decline"><b>${fmtArea(area.declineArea)}</b><span>estimated lost green-space area</span></div>
+      </div>`;
 }
 function renderSummary(s){
   if(s.isGlobal){
@@ -994,7 +1152,8 @@ function renderSummary(s){
       ${Object.entries(GLOBAL_STATS.groups).map(([g,v])=>`
         <div class="metric-row"><span>${g.replace(' income','')}</span><div class="bar"><i style="width:${Math.round(v/8*100)}%"></i></div><span>+${v.toFixed(1)}%</span></div>
       `).join('')}
-      <p class="summary-note">Change is % NDVI vs. each country's own 2000–2005 baseline. Group lines are unweighted means. Source: MODIS Terra NDVI, World Bank income tiers.</p>`;
+      ${areaSectionHtml(s.area)}
+      <p class="summary-note">Change is % NDVI vs. each country's own 2000–2005 baseline. Group lines are unweighted means. Area values are approximate, calculated from changed MODIS NDVI grid cells (~55km resolution). Source: MODIS Terra NDVI, World Bank income tiers.</p>`;
     return;
   }
   const groupAvg=GLOBAL_STATS.groups[s.group];
@@ -1015,11 +1174,12 @@ function renderSummary(s){
       <div class="stat"><b>${groupAvg>=0?'+':''}${groupAvg.toFixed(1)}%</b><span>average for ${s.group}</span></div>
       <div class="stat"><b>+${GLOBAL_STATS.globalMean.toFixed(1)}%</b><span>average across all 166 countries</span></div>
     </div>
+    ${areaSectionHtml(s.area)}
     <p class="summary-note">${s.name} sits far outside its own income tier's average — evidence that income tier predicts very little about an individual country's trajectory.</p>`;
 }
 function updateLegend(){
   if(state.mode==='change'){
-    $('#legend').innerHTML='<span class="legend-item"><i class="swatch"></i>Dot = growth</span><span class="legend-item"><i class="swatch orange"></i>Dot = decline</span><span class="legend-item">Bigger dot = larger change</span><span class="legend-item"><i class="spike"></i>Taller spike = higher-income country</span>';
+    $('#legend').innerHTML='<span class="legend-item"><i class="swatch"></i>Green = local growth</span><span class="legend-item"><i class="swatch orange"></i>Orange = local decline</span><span class="legend-item">Dot = one of 166 countries · bigger = larger change</span><span class="legend-item"><i class="spike"></i>Taller dot spike = higher-income country</span>';
   }else{
     $('#legend').innerHTML=`<span class="legend-item"><i class="ramp"></i>${modeLabels[state.mode]}</span><span class="legend-item"><i class="spike"></i>Taller spikes = greener, denser vegetation</span><span class="legend-item">Each spike = one real ~55km MODIS grid cell</span>`;
   }
@@ -1027,6 +1187,8 @@ function updateLegend(){
 function showTour(i){
   state.tour=i;
   const panel=$('#tourPanel');
+  $('#storyPanel').classList.toggle('hidden',i>=0);
+  $('#summaryPanel').classList.toggle('force-hide',i>=0);
   if(i<0){panel.classList.remove('visible');return}
   const t=TOUR[i];
   setMode(t.mode);
@@ -1044,16 +1206,80 @@ function finishTour(){
 function applyTheme(value){
   const dark=value==='dark'||(value==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
   document.body.classList.toggle('dark',dark);
-  if(state.globe)state.globe.backgroundColor(dark?'#101617':'#d7d6d2');
+  state.dark=dark;
+  if(state.globe){
+    state.globe.backgroundColor(dark?'#12181a':'#f4f2ec');
+    refreshPolygonColors();
+  }
+  [state.globeLeft,state.globeRight].forEach(g=>{
+    if(!g)return;
+    g.backgroundColor(dark?'#12181a':'#f4f2ec')
+     .polygonCapColor(polygonColor)
+     .polygonSideColor(()=>state.dark?'#242c2a':'#dcd9cb')
+     .polygonStrokeColor(()=>state.dark?'#4a5350':'#cac7ba');
+  });
+}
+const GLOBE_IMG_URL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4nGOU84pgYGBgYgADAAjwAMQ5LCYIAAAAAElFTkSuQmCC';
+function makeBaseGlobe(el){
+  const g=Globe()(el)
+    .backgroundColor(state.dark?'#12181a':'#f4f2ec')
+    .showAtmosphere(false)
+    .globeImageUrl(GLOBE_IMG_URL)
+    .polygonsTransitionDuration(0)
+    .polygonCapColor(polygonColor)
+    .polygonAltitude(polygonAltitude)
+    .polygonSideColor(()=>state.dark?'#242c2a':'#dcd9cb')
+    .polygonStrokeColor(()=>state.dark?'#4a5350':'#cac7ba')
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointResolution(8)
+    .pointsTransitionDuration(0)
+    .pointsMerge(true);
+  g.controls().autoRotate=false;
+  g.controls().enablePan=false;
+  return g;
+}
+function compareLabel(field,yearLabel){
+  return d=>`<div style="font-family:Inter;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.92);box-shadow:0 10px 22px rgba(0,0,0,.16);color:#151515;font-size:13px">${yearLabel} NDVI: ${d[field].toFixed(3)}</div>`;
+}
+function initCompareGlobes(){
+  if(state.globeLeft||!state.grid||!state.grid.length)return;
+  const elL=$('#globeLeft'),elR=$('#globeRight');
+  state.globeLeft=makeBaseGlobe(elL)
+    .polygonsData(state.features)
+    .pointColor(d=>ndviColor(d.ndvi_base))
+    .pointRadius(.34)
+    .pointAltitude(d=>gridHeight(gridNorm(d.ndvi_base,state.gridStats.base.p05,state.gridStats.base.p95)))
+    .pointLabel(compareLabel('ndvi_base','2000–05'))
+    .pointsData(state.grid);
+  state.globeRight=makeBaseGlobe(elR)
+    .polygonsData(state.features)
+    .pointColor(d=>ndviColor(d.ndvi_2024))
+    .pointRadius(.34)
+    .pointAltitude(d=>gridHeight(gridNorm(d.ndvi_2024,state.gridStats.y24.p05,state.gridStats.y24.p95)))
+    .pointLabel(compareLabel('ndvi_2024','2024'))
+    .pointsData(state.grid);
+  const sizeL=()=>state.globeLeft.width(elL.clientWidth).height(elL.clientHeight);
+  const sizeR=()=>state.globeRight.width(elR.clientWidth).height(elR.clientHeight);
+  sizeL();sizeR();
+  addEventListener('resize',()=>{sizeL();sizeR()});
+  syncCompareView(0);
+}
+function syncCompareView(duration){
+  if(!state.globeLeft)return;
+  const copy=REGION_COPY[state.region];
+  const pov={...copy.point,altitude:copy.point.altitude*state.zoom};
+  state.globeLeft.pointOfView(pov,duration);
+  state.globeRight.pointOfView(pov,duration);
 }
 function initGlobe(){
   const el=$('#globe');
   state.globe=Globe()(el)
-    .backgroundColor('#d7d6d2')
+    .backgroundColor('#f4f2ec')
     .showAtmosphere(false)
-    .globeImageUrl('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4nGOU84pgYGBgYgADAAjwAMQ5LCYIAAAAAElFTkSuQmCC')
+    .globeImageUrl(GLOBE_IMG_URL)
     .polygonsTransitionDuration(0)
-    .polygonStrokeColor(()=> '#2b5b68')
+    .polygonStrokeColor(()=>state.dark?'#4a5350':'#cac7ba')
     .polygonLabel(f=>{
       const d=getDatum(f);
       if(!d)return (f.properties&&f.properties.ADMIN)||'';
@@ -1064,9 +1290,21 @@ function initGlobe(){
     .pointColor(unifiedPointColor)
     .pointRadius(unifiedPointRadius)
     .pointAltitude(unifiedPointAltitude)
-    .pointResolution(6)
+    .pointResolution(8)
     .pointsTransitionDuration(0)
     .pointLabel(unifiedPointLabel)
+    .hexBinPointsData([])
+    .hexBinPointLat('lat')
+    .hexBinPointLng('lng')
+    .hexBinPointWeight(d=>d.change)
+    .hexBinResolution(3.4)
+    .hexMargin(0.12)
+    .hexBinMerge(true)
+    .hexTopColor(hexBinColor)
+    .hexSideColor(hexBinColor)
+    .hexAltitude(hexBinAltitude)
+    .hexTransitionDuration(0)
+    .hexLabel(bin=>`<div style="font-family:Inter;padding:6px 9px;border-radius:7px;background:rgba(255,255,255,.92);box-shadow:0 8px 18px rgba(0,0,0,.16);color:#151515;font-size:12px">net change: ${bin.sumWeight>=0?'+':''}${bin.sumWeight.toFixed(0)}%</div>`)
     .labelsData(OCEAN_LABELS)
     .labelLat('lat')
     .labelLng('lng')
@@ -1105,6 +1343,7 @@ async function load(){
       y24:{p05:percentile(grid.map(d=>d.ndvi_2024),.05),p95:percentile(grid.map(d=>d.ndvi_2024),.95)},
       base:{p05:percentile(grid.map(d=>d.ndvi_base),.05),p95:percentile(grid.map(d=>d.ndvi_base),.95)}
     };
+    computeAllAreaStats();
   }
   try{
     initGlobe();
@@ -1132,7 +1371,10 @@ $('#continueBtn').addEventListener('click',()=>$('#finalModal').classList.remove
 $('#againBtn').addEventListener('click',()=>{$('#finalModal').classList.remove('visible');showTour(0)});
 $('#zoomIn').addEventListener('click',()=>{state.zoom=Math.max(.65,state.zoom*.82);setRegion(state.region)});
 $('#zoomOut').addEventListener('click',()=>{state.zoom=Math.min(1.9,state.zoom*1.2);setRegion(state.region)});
-$('#tilt').addEventListener('click',()=>state.globe.pointOfView({...REGION_COPY[state.region].point,altitude:REGION_COPY[state.region].point.altitude*state.zoom},700));
+$('#tilt').addEventListener('click',()=>{
+  state.globe.pointOfView({...REGION_COPY[state.region].point,altitude:REGION_COPY[state.region].point.altitude*state.zoom},700);
+  syncCompareView(700);
+});
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if($('#themeSelect').value==='auto')applyTheme('auto')});
 
 setRegion('global');
