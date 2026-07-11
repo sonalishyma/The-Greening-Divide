@@ -16,15 +16,15 @@
   --panel-strong:rgba(255,255,255,.95);
   --edge:rgba(20,24,22,.07);
   --shadow:0 24px 60px rgba(20,26,24,.14);
-  --green:#2ca25f;
-  --green-2:#62bd83;
+  --green:#5fa86a;
+  --green-2:#7cbf85;
   --blue:#103f91;
-  --orange:#df6a42;
+  --orange:#e08a68;
   --sand:#f5efd6;
   --ocean:#0c2733;
   --map-bg:#f4f2ec;
-  --land:#f2f0e7;
-  --land-side:#dfdccf;
+  --land:#fafaf6;
+  --land-side:#e8e6dc;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
@@ -566,8 +566,8 @@ select{
 }
 .dot{width:13px;height:13px;border-radius:50%;background:#dccca3;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
 .dot.dark{background:linear-gradient(135deg,#159978,#103f91)}
-.dot.growth{background:#2ca463}
-.dot.decline{background:#df6a4b}
+.dot.growth{background:#5fa86a}
+.dot.decline{background:#e08a68}
 .modal-actions{display:flex;align-items:center;gap:14px}
 .status{color:#5e6264;font-size:12px;font-weight:750}
 .final{
@@ -925,7 +925,7 @@ function ndviColor(v){
   }
   return rgb(NDVI_RAMP[NDVI_RAMP.length-1][1]);
 }
-function changeColor(v){return v>0?'#2ca25f':'#e76f51'}
+function changeColor(v){return v>0?'#5fa86a':'#e08a68'}
 function getDatum(f){
   const p=f.properties||{};
   return state.data.get(p.ISO_A3)||state.data.get(p.ADM0_A3)||state.data.get(p.SOV_A3);
@@ -1038,7 +1038,7 @@ function buildData(rows){
 function polygonColor(f){
   const d=getDatum(f);
   if(state.dark)return d?'#3c4642':'#333d39';
-  return d?'#efece0':'#f2f0e7';
+  return d?'#f7f6f0':'#fafaf6';
 }
 function polygonAltitude(){return .01;}
 const INCOME_RANK={'Low income':1,'Lower middle income':2,'Upper middle income':3,'High income':4};
@@ -1096,7 +1096,7 @@ function refreshPolygonColors(){
     .polygonStrokeColor(()=>state.dark?'#4a5350':'#cac7ba');
 }
 function hexBinColor(bin){return changeColor(bin.sumWeight)}
-function hexBinAltitude(bin){return .008+Math.min(.045,Math.abs(bin.sumWeight)/900)}
+function hexBinAltitude(bin){return .003+Math.min(.018,Math.abs(bin.sumWeight)/1600)}
 function refreshGlobe(){
   if(!state.globe||!state.polysReady)return;
   refreshPolygonColors();
@@ -1318,8 +1318,8 @@ function initGlobe(){
     .hexBinPointLat('lat')
     .hexBinPointLng('lng')
     .hexBinPointWeight(d=>d.change)
-    .hexBinResolution(3.4)
-    .hexMargin(0.12)
+    .hexBinResolution(3.7)
+    .hexMargin(0.04)
     .hexBinMerge(true)
     .hexTopColor(hexBinColor)
     .hexSideColor(hexBinColor)
