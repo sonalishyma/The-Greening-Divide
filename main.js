@@ -8,7 +8,7 @@ const views = {
   global: {
     center: [15, 15],
     zoom: 1.55,
-    pitch: 22,
+    pitch: 0,
     bearing: 0,
     offset: [0, 0]
   },
@@ -200,7 +200,7 @@ let isLoadingDetail = false;
 let appReady = false;
 
 let activeDetail = {
-  present: "low",
+  present: "medium",
   compare: null,
   change: null
 };
@@ -215,9 +215,15 @@ const mapOptions = {
   zoom: views.global.zoom,
   pitch: views.global.pitch,
   bearing: views.global.bearing,
-  projection: "globe",
+  projection: {
+    type: "globe"
+  },
+  minZoom: -0.5,
+  maxZoom: 8,
   renderWorldCopies: false,
-  antialias: false,
+  canvasContextAttributes: {
+    antialias: true
+  },
   attributionControl: true
 };
 
@@ -266,7 +272,9 @@ Promise.all(maps.map(waitForMapLoad))
    ========================================================= */
 
 function setupGlobe(map) {
-  map.setProjection("globe");
+  map.setProjection({
+    type: "globe"
+  });
 
   if (map.setFog) {
     map.setFog(null);
@@ -391,9 +399,9 @@ async function initAllMaps() {
 
   updateSplashStatus("Loading 2024 vegetation layer...");
 
-  const data2025Low = await getGeoJSON("2025", "low");
+  const data2025Medium = await getGeoJSON("2025", "medium");
 
-  setupMapLayer(singleMap, data2025Low, "present");
+  setupMapLayer(singleMap, data2025Medium, "present");
   setupMapLayer(leftMap, emptyGeoJSON, "compare");
   setupMapLayer(rightMap, emptyGeoJSON, "compare");
 
@@ -425,7 +433,7 @@ async function initAllMaps() {
 
   currentMode = "present";
   activeView = "global";
-  activeDetail.present = "low";
+  activeDetail.present = "medium";
 
   jumpMapTo(singleMap, views.global);
   jumpMapTo(leftMap, views.global);
@@ -600,7 +608,7 @@ function getSpikePaint(mode) {
     "fill-extrusion-base": 0,
 
     "fill-extrusion-opacity":
-      mode === "compare" ? 0.78 : 0.98,
+      mode === "compare" ? 0.65 : 0.92,
 
     "fill-extrusion-vertical-gradient": false,
     "fill-extrusion-emissive-strength": 1,
@@ -642,10 +650,6 @@ function getChangePaint() {
    ========================================================= */
 
 function detailFromZoom(zoom, viewName = activeView) {
-  if (viewName === "global") {
-    return "high";
-  }
-
   if (zoom >= 5.3) {
     return "high";
   }
@@ -659,6 +663,10 @@ function detailFromZoom(zoom, viewName = activeView) {
   }
 
   if (zoom >= 3.2) {
+    return "medium";
+  }
+
+  if (zoom >= 1.2) {
     return "medium";
   }
 
