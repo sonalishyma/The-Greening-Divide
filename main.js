@@ -277,14 +277,22 @@ function setupGlobe(map) {
   });
 
   if (map.setFog) {
-    map.setFog(null);
+    map.setFog({
+      range: [0.5, 10],
+      color: "rgba(255, 255, 255, 0.6)",
+      "high-color": "rgba(210, 227, 235, 0.8)",
+      "space-color": "rgba(9, 15, 26, 1)",
+      "horizon-blend": 0.03,
+      "star-intensity": 0.2
+    });
   }
 
   if (map.setLight) {
     map.setLight({
       anchor: "viewport",
       color: "#ffffff",
-      intensity: 0
+      intensity: 0.35,
+      position: [1.5, 90, 60]
     });
   }
 }
@@ -610,10 +618,7 @@ function getSpikePaint(mode) {
     "fill-extrusion-opacity":
       mode === "compare" ? 0.65 : 0.92,
 
-    "fill-extrusion-vertical-gradient": false,
-    "fill-extrusion-emissive-strength": 1,
-    "fill-extrusion-ambient-occlusion-intensity": 0,
-    "fill-extrusion-ambient-occlusion-radius": 0
+    "fill-extrusion-vertical-gradient": false
   };
 }
 
@@ -638,10 +643,7 @@ function getChangePaint() {
 
     "fill-extrusion-base": 0,
     "fill-extrusion-opacity": 0.72,
-    "fill-extrusion-vertical-gradient": false,
-    "fill-extrusion-emissive-strength": 1,
-    "fill-extrusion-ambient-occlusion-intensity": 0,
-    "fill-extrusion-ambient-occlusion-radius": 0
+    "fill-extrusion-vertical-gradient": false
   };
 }
 
