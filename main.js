@@ -8,7 +8,7 @@ const views = {
   global: {
     center: [15, 15],
     zoom: 1.55,
-    pitch: 22,
+    pitch: 0,
     bearing: 0,
     offset: [0, 0]
   },
@@ -200,7 +200,7 @@ let isLoadingDetail = false;
 let appReady = false;
 
 let activeDetail = {
-  present: "low",
+  present: "medium",
   compare: null,
   change: null
 };
@@ -215,9 +215,15 @@ const mapOptions = {
   zoom: views.global.zoom,
   pitch: views.global.pitch,
   bearing: views.global.bearing,
-  projection: "globe",
+  projection: {
+    type: "globe"
+  },
+  minZoom: -0.5,
+  maxZoom: 8,
   renderWorldCopies: false,
-  antialias: false,
+  canvasContextAttributes: {
+    antialias: true
+  },
   attributionControl: true
 };
 
@@ -266,17 +272,27 @@ Promise.all(maps.map(waitForMapLoad))
    ========================================================= */
 
 function setupGlobe(map) {
-  map.setProjection("globe");
+  map.setProjection({
+    type: "globe"
+  });
 
   if (map.setFog) {
-    map.setFog(null);
+    map.setFog({
+      range: [0.5, 10],
+      color: "rgba(255, 255, 255, 0.6)",
+      "high-color": "rgba(210, 227, 235, 0.8)",
+      "space-color": "rgba(9, 15, 26, 1)",
+      "horizon-blend": 0.03,
+      "star-intensity": 0.2
+    });
   }
 
   if (map.setLight) {
     map.setLight({
       anchor: "viewport",
       color: "#ffffff",
-      intensity: 0
+      intensity: 0.35,
+      position: [1.5, 90, 60]
     });
   }
 }
@@ -391,9 +407,9 @@ async function initAllMaps() {
 
   updateSplashStatus("Loading 2024 vegetation layer...");
 
-  const data2025Low = await getGeoJSON("2025", "low");
+  const data2025Medium = await getGeoJSON("2025", "medium");
 
-  setupMapLayer(singleMap, data2025Low, "present");
+  setupMapLayer(singleMap, data2025Medium, "present");
   setupMapLayer(leftMap, emptyGeoJSON, "compare");
   setupMapLayer(rightMap, emptyGeoJSON, "compare");
 
@@ -425,7 +441,7 @@ async function initAllMaps() {
 
   currentMode = "present";
   activeView = "global";
-  activeDetail.present = "low";
+  activeDetail.present = "medium";
 
   jumpMapTo(singleMap, views.global);
   jumpMapTo(leftMap, views.global);
@@ -600,12 +616,9 @@ function getSpikePaint(mode) {
     "fill-extrusion-base": 0,
 
     "fill-extrusion-opacity":
-      mode === "compare" ? 0.78 : 0.98,
+      mode === "compare" ? 0.65 : 0.92,
 
-    "fill-extrusion-vertical-gradient": false,
-    "fill-extrusion-emissive-strength": 1,
-    "fill-extrusion-ambient-occlusion-intensity": 0,
-    "fill-extrusion-ambient-occlusion-radius": 0
+    "fill-extrusion-vertical-gradient": false
   };
 }
 
@@ -630,10 +643,7 @@ function getChangePaint() {
 
     "fill-extrusion-base": 0,
     "fill-extrusion-opacity": 0.72,
-    "fill-extrusion-vertical-gradient": false,
-    "fill-extrusion-emissive-strength": 1,
-    "fill-extrusion-ambient-occlusion-intensity": 0,
-    "fill-extrusion-ambient-occlusion-radius": 0
+    "fill-extrusion-vertical-gradient": false
   };
 }
 
@@ -642,10 +652,6 @@ function getChangePaint() {
    ========================================================= */
 
 function detailFromZoom(zoom, viewName = activeView) {
-  if (viewName === "global") {
-    return "high";
-  }
-
   if (zoom >= 5.3) {
     return "high";
   }
@@ -659,6 +665,10 @@ function detailFromZoom(zoom, viewName = activeView) {
   }
 
   if (zoom >= 3.2) {
+    return "medium";
+  }
+
+  if (zoom >= 1.2) {
     return "medium";
   }
 
