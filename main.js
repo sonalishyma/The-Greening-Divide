@@ -60,25 +60,25 @@ const storyText = {
   global: {
     title: "Testing the Wealth Hypothesis",
     text:
-      "Across 166 countries, 83% are greener in 2024 than their own 2000–2005 baseline. But the four World Bank income tiers land within just 1.6 percentage points of one another. The global pattern is real; the expected wealth gradient is not."
+      "Across 166 countries, 83% are greener in 2024 than their own 2000 to 2005 baseline. But the four World Bank income tiers land within just 1.6 percentage points of one another. The global pattern is real; the expected wealth gradient is not."
   },
 
   amazon: {
-    title: "Pakistan · Lower-middle income",
+    title: "Pakistan · Lower middle income",
     text:
-      "Pakistan is one of the fastest-greening countries in the dataset at +30.6%, despite being lower-middle income. Indus-basin irrigation and dryland vegetation dynamics offer a stronger explanation than national wealth."
+      "Pakistan is one of the fastest greening countries in the dataset at +30.6%, despite being lower middle income. Indus basin irrigation and dryland vegetation dynamics offer a stronger explanation than national wealth."
   },
 
   sahel: {
     title: "Eritrea · Low income",
     text:
-      "Eritrea is the fastest-greening country in the analysis at +34.0%. Its position in the lowest income tier directly contradicts the idea that environmental recovery is reserved for wealthier nations."
+      "Eritrea is the fastest greening country in the analysis at +34.0%. Its position in the lowest income tier directly contradicts the idea that environmental recovery is reserved for wealthier nations."
   },
 
   china: {
-    title: "Turkmenistan · Upper-middle income",
+    title: "Turkmenistan · Upper middle income",
     text:
-      "Turkmenistan is the fastest-browning country in the dataset at −11.9% despite its upper-middle income status. Aridity, water stress, and land degradation again fit the outcome better than wealth."
+      "Turkmenistan is the fastest browning country in the dataset with an 11.9% decline despite its upper middle income status. Aridity, water stress, and land degradation again fit the outcome better than wealth."
   }
 };
 
@@ -106,7 +106,7 @@ const tourSteps = [
   {
     title: "The Poorer Countries Can Lead",
     text:
-      "Pakistan, a lower-middle-income country, is among the fastest-greening examples. Irrigation and dryland recovery—not income—better explain the pattern.",
+      "Pakistan, a lower middle income country, is among the fastest greening examples. Irrigation and dryland recovery, not income, better explain the pattern.",
     mode: "change",
     view: "amazon"
   },
@@ -114,7 +114,7 @@ const tourSteps = [
   {
     title: "The Lowest Tier Can Lead",
     text:
-      "Eritrea, a low-income country, is the fastest-greening country in the analysis. The strongest counterexample sits at the bottom of the income ladder.",
+      "Eritrea, a low income country, is the fastest greening country in the analysis. The strongest counterexample sits at the bottom of the income ladder.",
     mode: "change",
     view: "sahel",
     openChart: true
@@ -1419,7 +1419,7 @@ function setupPopup(map) {
       popup
         .setLngLat(event.lngLat)
         .setHTML(`
-          <strong>NDVI Change, baseline–2024</strong><br>
+          <strong>NDVI Change, baseline to 2024</strong><br>
           ${
             change > 0
               ? "Growth"
@@ -1801,7 +1801,7 @@ function renderRegionCharts(viewName, stats) {
 
       return `
         <div class="bar-row">
-          <span>${year === "2025" ? "2024" : year === "2013" ? "2012" : "2000–05"}</span>
+          <span>${year === "2025" ? "2024" : year === "2013" ? "2012" : "2000 to 2005"}</span>
 
           <div class="bar-track">
             <div
@@ -1875,7 +1875,7 @@ function renderRegionCharts(viewName, stats) {
       </strong>
 
       <span>
-        estimated added green-space area
+        estimated added green space area
       </span>
     </div>
 
@@ -1887,7 +1887,7 @@ function renderRegionCharts(viewName, stats) {
       </strong>
 
       <span>
-        estimated lost green-space area
+        estimated lost green space area
       </span>
     </div>
   `;
