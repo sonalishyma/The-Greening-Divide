@@ -6,6 +6,16 @@
 
 ---
 
+## Project Preview
+
+![The Greening Divide interactive globe](./SS1.png)
+
+![The Greening Divide country comparison](./SS2.png)
+
+![The Greening Divide findings and data story](./SS3.png)
+
+---
+
 ## The story
 
 Satellites have shown for years that the planet, on net, has gotten greener since 2000 — more leaf area, more vegetation, even in a warming world. The obvious next question, and the one this project set out to answer, is: **does that greening favor wealthy countries?** Rich nations have more capital for irrigation, agricultural technology, land management, and conservation, so the intuitive hypothesis is that greening should track income.
